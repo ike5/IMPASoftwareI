@@ -5,6 +5,6 @@ module IMPASoftwareI {
 
     opens controller;
     opens model;
-    opens sample;
+    opens defaultpackage;
     opens view;
 }
