@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="javafx.web1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.web.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.swing.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.media.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.graphics.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.fxml.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.controls.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.base.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx-swt.jar!/" />
+      <root url="file://$USER_HOME$/Downloads" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$USER_HOME$/Downloads/db-derby-10.14.2.0-bin/db-derby-10.14.2.0-bin/javadoc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$USER_HOME$/Downloads/db-derby-10.14.2.0-bin/db-derby-10.14.2.0-bin/demo/programs" />
+      <root url="file://$USER_HOME$/Downloads/db-derby-10.14.2.0-bin/db-derby-10.14.2.0-bin/demo/programs/scores/java/client" />
+      <root url="file://$USER_HOME$/Downloads/db-derby-10.14.2.0-bin/db-derby-10.14.2.0-bin/demo/programs/scores/java/common" />
+      <root url="file://$USER_HOME$/Downloads/db-derby-10.14.2.0-bin/db-derby-10.14.2.0-bin/demo/programs/scores/java/server" />
+      <root url="file://$USER_HOME$/Downloads/db-derby-10.14.2.0-bin/db-derby-10.14.2.0-bin/demo/programs/simple" />
+      <root url="file://$USER_HOME$/Downloads/db-derby-10.14.2.0-bin/db-derby-10.14.2.0-bin/demo/programs/vtis/java" />
+      <root url="file://$USER_HOME$/Downloads" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Downloads" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Downloads" recursive="false" type="SOURCES" />
+  </library>
+</component>
