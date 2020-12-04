@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainController {
-    Stage stage;
-    Parent scene;
+    Stage stage;  // Every application needs a stage.
+    Parent scene; // Can have as many scenes as you want.
 
     @FXML
     private TextField searchPartTextField;
@@ -87,7 +87,11 @@ public class MainController {
      */
     @FXML
     void onActionAddPart(ActionEvent event) throws IOException {
+        // Cast to let program know source is a button
+        // then cast to let know window is a stage.
+        // Get source of event and let handler know event type is a Button.
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        // Load resources from view directory
         scene = FXMLLoader.load(getClass().getResource("/view/AddPart.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
@@ -101,7 +105,10 @@ public class MainController {
      */
     @FXML
     void onActionAddProduct(ActionEvent event) throws IOException {
+        // Cast to let program know source is a button
+        // then cast to let know window is a stage.
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        // Load resources from view directory
         scene = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
@@ -136,7 +143,10 @@ public class MainController {
      */
     @FXML
     void onActionModifyPart(ActionEvent event) throws IOException {
+        // Cast to let program know source is a button
+        // then cast to let know window is a stage.
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        // Load resources from view directory
         scene = FXMLLoader.load(getClass().getResource("/view/ModifyPart.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
@@ -150,7 +160,10 @@ public class MainController {
      */
     @FXML
     void onActionModifyProduct(ActionEvent event) throws IOException {
+        // Cast to let program know source is a Button
+        // then cast to let know window is a stage.
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        // Load resources from view directory
         scene = FXMLLoader.load(getClass().getResource("/view/ModifyProduct.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();

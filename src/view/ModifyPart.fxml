@@ -16,8 +16,11 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                        <RadioButton fx:id="modifyPartInHouseRButton" mnemonicParsing="false" onAction="#modifyPartInHouseRButton" text="In-House" />
-                        <RadioButton fx:id="modifyPartOutsourcedRButton" layoutX="31.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionModifyPartOutsourcedRButton" text="Outsourced" />
+                        <RadioButton fx:id="modifyPartInHouseRButton" mnemonicParsing="false" onAction="#modifyPartInHouseRButton" text="In-House">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="modifyToggleGroup" />
+                     </toggleGroup></RadioButton>
+                        <RadioButton fx:id="modifyPartOutsourcedRButton" layoutX="31.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionModifyPartOutsourcedRButton" text="Outsourced" toggleGroup="$modifyToggleGroup" />
                     </children>
                     <padding>
                         <Insets left="50.0" right="50.0" />
