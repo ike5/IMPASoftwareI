@@ -44,8 +44,8 @@ public class ModifyProductController {
     @FXML
     private TableColumn<?, ?> modifyProductPriceColumn;
 
-    @FXML
-    private Button modifyProductAddButton;
+//    @FXML
+//    private Button modifyProductAddButton;
 
     @FXML
     private TableView<?> modifyProductTableView2;
@@ -62,14 +62,14 @@ public class ModifyProductController {
     @FXML
     private TableColumn<?, ?> modifyProductPriceCol;
 
-    @FXML
-    private Button modifyProductRemoveAssButton;
-
-    @FXML
-    private Button modifyProductSaveButton;
-
-    @FXML
-    private Button modifyProductCancelButton;
+//    @FXML
+//    private Button modifyProductRemoveAssButton;
+//
+//    @FXML
+//    private Button modifyProductSaveButton;
+//
+//    @FXML
+//    private Button modifyProductCancelButton;
 
     @FXML
     void onActionModifyProductAdd(ActionEvent event) {

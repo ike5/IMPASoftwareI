@@ -39,11 +39,11 @@ public class AddPartController {
     @FXML
     private TextField minPartTextField;
 
-    @FXML
-    private Button savePartButton;
-
-    @FXML
-    private Button cancelPartButton;
+//    @FXML
+//    private Button savePartButton;
+//
+//    @FXML
+//    private Button cancelPartButton;
 
     @FXML
     void onActionCancelPart(ActionEvent event) {

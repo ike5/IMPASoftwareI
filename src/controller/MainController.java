@@ -54,6 +54,10 @@ public class MainController {
     @FXML
     private TableColumn<?, ?> productPricePerUnitColumn;
 
+    /*
+    Will not be needing labels for buttons (I don't think).
+    To prevent null pointer exceptions, remove these.
+
     @FXML
     private Button addProductButton;
 
@@ -65,6 +69,7 @@ public class MainController {
 
     @FXML
     private Button exitButton;
+    */
 
     @FXML
     void onActionAddPart(ActionEvent event) {

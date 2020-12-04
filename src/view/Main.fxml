@@ -40,9 +40,9 @@
                         </TableView>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                            <children>
-                              <Button fx:id="addPartButton" mnemonicParsing="false" onAction="#onActionAddPart" text="Add" />
-                              <Button fx:id="modifyPartButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionModifyPart" text="Modify" />
-                              <Button fx:id="deletePartButton" layoutX="72.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionDeletePart" text="Delete" />
+                              <Button mnemonicParsing="false" onAction="#onActionAddPart" text="Add" />
+                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionModifyPart" text="Modify" />
+                              <Button layoutX="72.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionDeletePart" text="Delete" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" right="20.0" top="5.0" />
@@ -79,9 +79,9 @@
                         </TableView>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                            <children>
-                              <Button fx:id="addProductButton" mnemonicParsing="false" onAction="#onActionAddProduct" text="Add" />
-                              <Button fx:id="modifyProductButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionModifyProduct" text="Modify" />
-                              <Button fx:id="deleteProductButton" layoutX="72.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionDeleteProduct" text="Delete" />
+                              <Button mnemonicParsing="false" onAction="#onActionAddProduct" text="Add" />
+                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionModifyProduct" text="Modify" />
+                              <Button layoutX="72.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionDeleteProduct" text="Delete" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" right="20.0" top="5.0" />
@@ -93,7 +93,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onActionExit" text="Exit" textAlignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#onActionExit" text="Exit" textAlignment="CENTER" />
                </children>
             </HBox>
          </children>

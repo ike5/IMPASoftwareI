@@ -45,8 +45,8 @@ public class AddProductController {
     @FXML
     private TableColumn<?, ?> addProductPriceColumn;
 
-    @FXML
-    private Button addProductAddButton;
+//    @FXML
+//    private Button addProductAddButton;
 
     @FXML
     private TableView<?> addProductTableView2;
@@ -63,14 +63,16 @@ public class AddProductController {
     @FXML
     private TableColumn<?, ?> addProductPriceCol;
 
-    @FXML
-    private Button addProductRemoveAssButton;
 
-    @FXML
-    private Button addProductSaveButton;
-
-    @FXML
-    private Button addProductCancelButton;
+    // Not necessary to reference buttons
+//    @FXML
+//    private Button addProductRemoveAssButton;
+//
+//    @FXML
+//    private Button addProductSaveButton;
+//
+//    @FXML
+//    private Button addProductCancelButton;
 
     @FXML
     void onActionAddProductAddButton(ActionEvent event) {

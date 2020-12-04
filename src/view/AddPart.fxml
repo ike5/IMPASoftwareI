@@ -71,8 +71,8 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button fx:id="savePartButton" mnemonicParsing="false" onAction="#onActionSavePart" text="Save" />
-                  <Button fx:id="cancelPartButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionCancelPart" text="Cancel" />
+                  <Button mnemonicParsing="false" onAction="#onActionSavePart" text="Save" />
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionCancelPart" text="Cancel" />
                </children>
                <padding>
                   <Insets left="50.0" right="50.0" />

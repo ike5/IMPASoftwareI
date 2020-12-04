@@ -34,11 +34,11 @@ public class ModifyPartController {
     @FXML
     private TextField minModifyPartTextField;
 
-    @FXML
-    private Button modifyPartSaveButton;
-
-    @FXML
-    private Button modifyPartCancelButton;
+//    @FXML
+//    private Button modifyPartSaveButton;
+//
+//    @FXML
+//    private Button modifyPartCancelButton;
 
     @FXML
     void modifyPartInHouseRButton(ActionEvent event) {
