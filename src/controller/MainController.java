@@ -2,12 +2,20 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainController {
+    Stage stage;
+    Parent scene;
 
     @FXML
     private TextField searchPartTextField;
@@ -71,39 +79,81 @@ public class MainController {
     private Button exitButton;
     */
 
+    /**
+     * Button opens new Add Part window.
+     *
+     * @param event button click
+     * @throws IOException
+     */
     @FXML
-    void onActionAddPart(ActionEvent event) {
-
+    void onActionAddPart(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/AddPart.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
+    /**
+     * Button opens new Add Product window.
+     *
+     * @param event button click
+     * @throws IOException
+     */
     @FXML
-    void onActionAddProduct(ActionEvent event) {
-
+    void onActionAddProduct(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
     void onActionDeletePart(ActionEvent event) {
-
+        System.out.println("Delete part button clicked!");
     }
 
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
-
+        System.out.println("Delete product button clicked!");
     }
 
+    /**
+     * Button exits application.
+     *
+     * @param event button click
+     */
     @FXML
     void onActionExit(ActionEvent event) {
-
+        // Closes entire application
+        System.exit(0);
     }
 
+    /**
+     * Button opens Modify Part window.
+     *
+     * @param event button click
+     * @throws IOException
+     */
     @FXML
-    void onActionModifyPart(ActionEvent event) {
-
+    void onActionModifyPart(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/ModifyPart.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
+    /**
+     * Button opens Modify Product window.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
-    void onActionModifyProduct(ActionEvent event) {
-
+    void onActionModifyProduct(ActionEvent event) throws IOException {
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/ModifyProduct.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
 }
