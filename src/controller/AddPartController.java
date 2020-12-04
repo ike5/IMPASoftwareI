@@ -1,35 +1,98 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 public class AddPartController {
-    public void onActionNamePartTextField(ActionEvent actionEvent) {
+
+    @FXML
+    private RadioButton inhousePartRadioButton;
+
+    @FXML
+    private ToggleGroup sourceToggleGroup;
+
+    @FXML
+    private RadioButton outsourcedPartRadioButton;
+
+    @FXML
+    private TextField idAddPartTextField;
+
+    @FXML
+    private TextField namePartTextField;
+
+    @FXML
+    private TextField invPartTextField;
+
+    @FXML
+    private TextField pricePartTextField;
+
+    @FXML
+    private TextField maxPartTextField;
+
+    @FXML
+    private TextField machineIdPartTextField;
+
+    @FXML
+    private TextField minPartTextField;
+
+    @FXML
+    private Button savePartButton;
+
+    @FXML
+    private Button cancelPartButton;
+
+    @FXML
+    void onActionCancelPart(ActionEvent event) {
+
     }
 
-    public void onActionInvPartTextField(ActionEvent actionEvent) {
+    @FXML
+    void onActionInhousePartRadio(ActionEvent event) {
+
     }
 
-    public void onActionPricePartTextField(ActionEvent actionEvent) {
+    @FXML
+    void onActionInvPartTextField(ActionEvent event) {
+
     }
 
-    public void onActionMaxPartTextField(ActionEvent actionEvent) {
+    @FXML
+    void onActionMachineIdPartTextField(ActionEvent event) {
+
     }
 
-    public void onActionMachineIdPartTextField(ActionEvent actionEvent) {
+    @FXML
+    void onActionMaxPartTextField(ActionEvent event) {
+
     }
 
-    public void onActionMinPartTextField(ActionEvent actionEvent) {
+    @FXML
+    void onActionMinPartTextField(ActionEvent event) {
+
     }
 
-    public void onActionSavePart(ActionEvent actionEvent) {
+    @FXML
+    void onActionNamePartTextField(ActionEvent event) {
+
     }
 
-    public void onActionCancelPart(ActionEvent actionEvent) {
+    @FXML
+    void onActionOursourcedPartRadio(ActionEvent event) {
+
     }
 
-    public void onActionInhousePartRadio(ActionEvent actionEvent) {
+    @FXML
+    void onActionPricePartTextField(ActionEvent event) {
+
     }
 
-    public void onActionOursourcedPartRadio(ActionEvent actionEvent) {
+    @FXML
+    void onActionSavePart(ActionEvent event) {
+
     }
+
 }

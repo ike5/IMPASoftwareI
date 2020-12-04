@@ -56,7 +56,7 @@
                         <Insets left="20.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="idPartTextField" disable="true" promptText="Auto Gen-Disabled" GridPane.columnIndex="1">
+                  <TextField fx:id="idAddPartTextField" disable="true" promptText="Auto Gen-Disabled" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Italic" size="10.0" />
                      </font>

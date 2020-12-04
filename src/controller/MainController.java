@@ -4,12 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 public class MainController {
 
     @FXML
     private TextField searchPartTextField;
+
+    @FXML
+    private TableView<?> partTableView;
 
     @FXML
     private TableColumn<?, ?> partIdColumn;
@@ -34,6 +38,9 @@ public class MainController {
 
     @FXML
     private TextField searchProductTextField;
+
+    @FXML
+    private TableView<?> productTableView;
 
     @FXML
     private TableColumn<?, ?> productIdColumn;
@@ -81,7 +88,7 @@ public class MainController {
 
     @FXML
     void onActionExit(ActionEvent event) {
-        System.exit(0);
+
     }
 
     @FXML

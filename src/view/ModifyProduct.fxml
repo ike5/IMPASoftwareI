@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="600.0" prefHeight="550.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyProductController">
     <children>
@@ -51,16 +60,16 @@
                                         <Insets left="20.0" />
                                     </GridPane.margin>
                                 </Label>
-                                <TextField disable="true" promptText="Auto Gen-Disabled" GridPane.columnIndex="1">
+                                <TextField fx:id="idModifyProductTextField" disable="true" promptText="Auto Gen-Disabled" GridPane.columnIndex="1">
                                     <font>
                                         <Font name="System Italic" size="10.0" />
                                     </font>
                                 </TextField>
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <TextField GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                <TextField fx:id="nameModifyProductTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="invModifyProductTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField fx:id="priceModifyProductTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <TextField fx:id="maxModifyProductTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <TextField fx:id="minModifyProductTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                             </children>
                         </GridPane>
                     </children>
@@ -72,45 +81,45 @@
                     <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
                             <children>
-                                <TextField alignment="CENTER" prefHeight="26.0" prefWidth="202.0" promptText="Search by Part ID or Name">
+                                <TextField fx:id="modifyProductSearchTextField" alignment="CENTER" prefHeight="26.0" prefWidth="202.0" promptText="Search by Part ID or Name">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin></TextField>
                             </children>
                         </HBox>
-                        <TableView maxHeight="200.0" maxWidth="500.0" prefHeight="200.0" prefWidth="500.0">
+                        <TableView fx:id="modifyProductTableView1" maxHeight="200.0" maxWidth="500.0" prefHeight="200.0" prefWidth="500.0">
                             <columns>
-                                <TableColumn prefWidth="75.0" text="Part ID" />
-                                <TableColumn prefWidth="100.0" text="Part Name" />
-                                <TableColumn prefWidth="100.0" text="Inventory Level" />
-                                <TableColumn prefWidth="125.0" text="Price/Cost per Unit" />
+                                <TableColumn fx:id="modifyProductPartIdColumn" prefWidth="75.0" text="Part ID" />
+                                <TableColumn fx:id="modifyProductPartNameColumn" prefWidth="100.0" text="Part Name" />
+                                <TableColumn fx:id="modifyProductInvLevelColumn" prefWidth="100.0" text="Inventory Level" />
+                                <TableColumn fx:id="modifyProductPriceColumn" prefWidth="125.0" text="Price/Cost per Unit" />
                             </columns>
                         </TableView>
                         <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
                             <children>
-                                <Button mnemonicParsing="false" text="Add" />
+                                <Button fx:id="modifyProductAddButton" mnemonicParsing="false" onAction="#onActionModifyProductAdd" text="Add" />
                             </children>
                             <padding>
                                 <Insets bottom="5.0" right="20.0" top="5.0" />
                             </padding>
                         </HBox>
-                        <TableView layoutX="12.0" layoutY="112.0" maxHeight="200.0" maxWidth="500.0" prefHeight="200.0" prefWidth="500.0">
+                        <TableView fx:id="modifyProductTableView2" layoutX="12.0" layoutY="112.0" maxHeight="200.0" maxWidth="500.0" prefHeight="200.0" prefWidth="500.0">
                             <columns>
-                                <TableColumn prefWidth="75.0" text="Part ID" />
-                                <TableColumn prefWidth="100.0" text="Part Name" />
-                                <TableColumn prefWidth="100.0" text="Inventory Level" />
-                                <TableColumn prefWidth="125.0" text="Price/Cost per Unit" />
+                                <TableColumn fx:id="modifyProductPartIdCol" prefWidth="75.0" text="Part ID" />
+                                <TableColumn fx:id="modifyProductPartNameCol" prefWidth="100.0" text="Part Name" />
+                                <TableColumn fx:id="modifyProductInvLevelCol" prefWidth="100.0" text="Inventory Level" />
+                                <TableColumn fx:id="modifyProductPriceCol" prefWidth="125.0" text="Price/Cost per Unit" />
                             </columns>
                         </TableView>
                         <HBox alignment="CENTER_RIGHT" layoutX="12.0" layoutY="312.0" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
                             <children>
                                 <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="169.0" spacing="10.0">
                                     <children>
-                                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" text="Remove Associated Part" />
+                                        <Button fx:id="modifyProductRemoveAssButton" mnemonicParsing="false" onAction="#onActionModifyProductRemoveAss" prefHeight="25.0" prefWidth="129.0" text="Remove Associated Part" />
                                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="37.0">
                                             <children>
-                                                <Button mnemonicParsing="false" text="Save" />
-                                                <Button mnemonicParsing="false" text="Cancel" />
+                                                <Button fx:id="modifyProductSaveButton" mnemonicParsing="false" onAction="#onActionModifyProductSave" text="Save" />
+                                                <Button fx:id="modifyProductCancelButton" mnemonicParsing="false" onAction="#onActionModifyProductCancel" text="Cancel" />
                                             </children>
                                         </HBox>
                                     </children>
