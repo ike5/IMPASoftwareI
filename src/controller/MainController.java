@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.Part;
+import model.Product;
 
 import java.io.IOException;
 import java.net.URL;
@@ -159,6 +160,22 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    public boolean searchPart(int id) {
+        // search method will set the id
+        for (Part part : Inventory.getAllParts()) {
+            if (part.getId() == id)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean searchProduct(int id) {
+        for (Product product : Inventory.getAllProducts()) {
+            if (product.getId() == id)
+                return true;
+        }
+        return false;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -168,6 +185,12 @@ public class MainController implements Initializable {
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        if(searchPart(9)){
+            System.out.println("found...");
+        } else {
+            System.out.println("not found...");
+        }
     }
 }
 
