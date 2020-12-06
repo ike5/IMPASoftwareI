@@ -18,6 +18,7 @@ import model.InHouse;
 import model.Inventory;
 import model.Part;
 import model.Product;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -192,9 +193,9 @@ public class MainController implements Initializable {
         return false;
     }
 
-    public boolean deletePart(int id){
-        for(Part p : Inventory.getAllParts()){
-            if(p.getId() == id){
+    public boolean deletePart(int id) {
+        for (Part p : Inventory.getAllParts()) {
+            if (p.getId() == id) {
                 return Inventory.getAllParts().remove(p);
             }
         }
@@ -202,41 +203,57 @@ public class MainController implements Initializable {
     }
 
     // method to return Part object from id
-    public Part selectPart(int id){
-        for(Part p : Inventory.getAllParts()){
-            if(p.getId() == id){
+
+    /**
+     * This method finds and returns a Part object.
+     * Using id, this method iterates through Inventory and returns the first match.
+     *
+     * @param id The integer id of the Part object being requested.
+     * @return Returns a Part object.
+     */
+    public Part selectPart(int id) {
+        for (Part p : Inventory.getAllParts()) {
+            if (p.getId() == id) {
                 return p;
             }
         }
         return null;
     }
 
-    public ObservableList<Part> filterPart(String name){
+    /**
+     * This method filters searched items on a TableView.
+     * This method is used to search a TableView object and return items matching parameters.
+     *
+     * @param name A String representing the name of a Part or ID.
+     * @return Returns an ObservableList object of Part type containing all matches, or
+     * the original ObservableList if no matches are found.
+     */
+    public ObservableList<Part> filterPart(String name) {
         int index = -1; // to see how many items are in the list
 
         // Clear list if not empty
-        if(!Inventory.getAllFilteredParts().isEmpty()){
+        if (!Inventory.getAllFilteredParts().isEmpty()) {
             Inventory.getAllFilteredParts().clear();
         }
 
         // Any matching strings are put in a filtered ObservableList<Part>
-        for(Part part : Inventory.getAllParts()){
-            if(part.getName().contains(name)){
+        for (Part part : Inventory.getAllParts()) {
+            if (part.getName().contains(name)) {
                 Inventory.getAllFilteredParts().add(part);
                 index++;
             }
 
             // If there is a single item, highlight it.
             // Otherwise clear any highlights.
-            if (index == 0){
-               partTableView.getSelectionModel().select(part);
+            if (index == 0) {
+                partTableView.getSelectionModel().select(part);
             } else {
                 partTableView.getSelectionModel().clearSelection();
             }
         }
 
         // returns the original list if nothing returns filtered
-        if(Inventory.getAllFilteredParts().isEmpty()){
+        if (Inventory.getAllFilteredParts().isEmpty()) {
             return Inventory.getAllParts();
         } else {
             return Inventory.getAllFilteredParts();
@@ -251,6 +268,14 @@ public class MainController implements Initializable {
         return false;
     }
 
+    /**
+     * This method initializes upon staging of window.
+     * The method sets up the TableView and provides a way to link the columns to their
+     * respective controllers.
+     *
+     * @param url            Unused parameter
+     * @param resourceBundle Unused parameter
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partTableView.setItems(Inventory.getAllParts()); // set up table view, let table know which objects will be working with.
@@ -262,7 +287,6 @@ public class MainController implements Initializable {
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
 
 
         // searching
