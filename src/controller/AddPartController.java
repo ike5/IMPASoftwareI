@@ -3,28 +3,34 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.InHouse;
+import model.Inventory;
+import model.Outsourced;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AddPartController {
+public class AddPartController implements Initializable {
     Stage stage;
     Parent scene;
 
     @FXML
-    private RadioButton inhousePartRadioButton;
+    private RadioButton inHousePartRadioButton;
 
     @FXML
     private ToggleGroup sourceToggleGroup;
 
     @FXML
     private RadioButton outsourcedPartRadioButton;
+
+    @FXML
+    private Label labelPartCompanyOrMachineID;
 
     @FXML
     private TextField idAddPartTextField;
@@ -42,7 +48,7 @@ public class AddPartController {
     private TextField maxPartTextField;
 
     @FXML
-    private TextField machineIdPartTextField;
+    private TextField companyOrMachineIdPartTextField;
 
     @FXML
     private TextField minPartTextField;
@@ -69,47 +75,46 @@ public class AddPartController {
 
     @FXML
     void onActionInhousePartRadio(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionInvPartTextField(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionMachineIdPartTextField(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionMaxPartTextField(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionMinPartTextField(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onActionNamePartTextField(ActionEvent event) {
-
+        labelPartCompanyOrMachineID.setText("Machine ID");
     }
 
     @FXML
     void onActionOursourcedPartRadio(ActionEvent event) {
-
+        labelPartCompanyOrMachineID.setText("Company Name");
     }
 
     @FXML
-    void onActionPricePartTextField(ActionEvent event) {
+    void onActionSavePart(ActionEvent event) throws IOException{
+
+
+        int id = Inventory.getAllParts().size() + 1;
+        String name = namePartTextField.getText();
+        int inv = Integer.parseInt(invPartTextField.getText());
+        double price = Double.parseDouble(pricePartTextField.getText());
+        int max = Integer.parseInt(maxPartTextField.getText());
+        int min = Integer.parseInt(minPartTextField.getText());
+        String companyNameOrMachineId = companyOrMachineIdPartTextField.getText();
+
+        // select correct radio button
+        // then pass to ObservableList<Part> object
+        if (inHousePartRadioButton.isSelected()) {
+            Inventory.addPart(new InHouse(id, name, price, inv, min, max, companyNameOrMachineId));
+        } else {
+            Inventory.addPart(new Outsourced(id, name, price, inv, min, max, companyNameOrMachineId));
+        }
+
+
+
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
 
     }
 
-    @FXML
-    void onActionSavePart(ActionEvent event) {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        labelPartCompanyOrMachineID.setText("Machine ID"); // Default label
     }
-
 }

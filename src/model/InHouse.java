@@ -2,18 +2,18 @@ package model;
 // Completed (still needs Javadocs however)
 
 public class InHouse extends Part {
-    private int machineId;
+    private String machineId;
 
-    public InHouse(int id, String name, double price, int stock, int min, int max, int machineId){
+    public InHouse(int id, String name, double price, int stock, int min, int max, String machineId){
         super(id, name, price, stock, min, max);
         this.machineId = machineId;
     }
 
-    public int getMachineId() {
+    public String getMachineId() {
         return machineId;
     }
 
-    public void setMachineId(int machineId) {
+    public void setMachineId(String machineId) {
         this.machineId = machineId;
     }
 }
