@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.InHouse;
 import model.Inventory;
 import model.Part;
 import model.Product;
@@ -169,6 +170,38 @@ public class MainController implements Initializable {
         return false;
     }
 
+    public boolean updatePart(int id, Part part) {
+        int index = -1;
+        for (Part p : Inventory.getAllParts()) {
+            index++; // first time around index will be 0
+            // if there's a match we will perform the update
+            if (p.getId() == id) {
+                Inventory.getAllParts().set(index, part); // set(value of index at match, part that wants to replace)
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deletePart(int id){
+        for(Part p : Inventory.getAllParts()){
+            if(p.getId() == id){
+                return Inventory.getAllParts().remove(p);
+            }
+        }
+        return false;
+    }
+
+    // method to return Part object from id
+    public Part selectPart(int id){
+        for(Part p : Inventory.getAllParts()){
+            if(p.getId() == id){
+                return p;
+            }
+        }
+        return null;
+    }
+
     public boolean searchProduct(int id) {
         for (Product product : Inventory.getAllProducts()) {
             if (product.getId() == id)
@@ -186,11 +219,30 @@ public class MainController implements Initializable {
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        if(searchPart(9)){
-            System.out.println("found...");
-        } else {
-            System.out.println("not found...");
-        }
+        // searching
+//        if(searchPart(9)){
+//            System.out.println("found...");
+//        } else {
+//            System.out.println("not found...");
+//        }
+
+        // updating
+//        if (updatePart(55, new InHouse(9, "bakery", 355.55, 6, 1, 20, "tmahine323"))){
+//            System.out.println("Update successful");
+//        } else {
+//            System.out.println("Update failed");
+//        }
+
+        // deleting
+//        if(deletePart(3)){
+//            System.out.println("Deleted!");
+//        } else {
+//            System.out.println("No match!");
+//        }
+
+        // highlight row
+        // get reference to TableView object
+        partTableView.getSelectionModel().select(selectPart(3));
     }
 }
 

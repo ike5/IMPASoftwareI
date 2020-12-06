@@ -1,0 +1,10 @@
+set() method can be used to replace row items
+
+TableView methods
+-getSelectionModel(): selection model obj
+    types are Single Selection and Multi Selection models
+        Single Selection = select 1 row at a time
+
+-getSelectedIndex() : index # of any item selected
+-getSelectedItem() : object of selected item
+-select() : selectively highlights a row in TableView
