@@ -1,4 +1,5 @@
 package model;
+// Completed (by default)
 
 /**
 * Supplied class Part.java 

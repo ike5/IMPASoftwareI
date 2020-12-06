@@ -1,4 +1,5 @@
 package model;
+// Completed (still needs Javadocs however)
 
 public class InHouse extends Part {
     private int machineId;

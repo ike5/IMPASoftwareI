@@ -1,4 +1,5 @@
 package model;
+// Completed (Still needs Javadocs however)
 
 public class Outsourced extends Part{
     private String companyName;
