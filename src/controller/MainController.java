@@ -18,7 +18,6 @@ import model.InHouse;
 import model.Inventory;
 import model.Part;
 import model.Product;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -126,7 +125,7 @@ public class MainController implements Initializable {
      * The Exit button closes the application.
      * The Exit button calls the exit() method to close the application.
      *
-     * @param event The events object generated after clicking the Exit button.
+     * @param event The event object generated after clicking the Exit button.
      */
     @FXML
     void onActionExit(ActionEvent event) {
@@ -135,9 +134,10 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Button opens Modify Part window.
+     * The Modify button opens the ModifyPart stage.
+     * The button responds to click events to load and display the ModifyPart stage.
      *
-     * @param event button click
+     * @param event The event object generated after clicking the Modify button.
      * @throws IOException
      */
     @FXML
@@ -152,9 +152,10 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Button opens Modify Product window.
+     * The Modify button opens the ModifyProduct stage.
+     * The button responds to click events to load and display the ModifyProduct stage.
      *
-     * @param event
+     * @param event The event object generated after clicking the Modify button.
      * @throws IOException
      */
     @FXML
@@ -168,11 +169,25 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /**
+     * This method responds upon key entry in the search field.
+     * The method updates the Part TableView with filtered Part objects
+     * as a result of the search text.
+     *
+     * @param event The event object generated after text is entered in the search field.
+     */
     @FXML
     void onKeyTypedSearchPartIdOrName(KeyEvent event) {
         partTableView.setItems(filterPart(searchPartTextField.getText()));
     }
 
+    /**
+     * This method is used to see whether a Part object exists in Inventory.
+     * The method iterates through Inventory and stops when a match is found.
+     *
+     * @param id The id of a Part object.
+     * @return Returns true if a Part object is in Inventory, and false if not found.
+     */
     public boolean searchPart(int id) {
         // search method will set the id
         for (Part part : Inventory.getAllParts()) {
@@ -182,6 +197,16 @@ public class MainController implements Initializable {
         return false;
     }
 
+    /**
+     * This method takes in a Part ID and replaces it with a new Part object.
+     * The method searches through Inventory to find the matching Part,
+     * then replaces it with a new Part object as provided by the parameter.
+     *
+     * @param id   The ID of the Part object to be replaced.
+     * @param part The replacing Part object.
+     * @return Returns true if Part ID matches: the Part is then replaced.
+     * Returns false if not match found and no changes are made.
+     */
     public boolean updatePart(int id, Part part) {
         int index = -1;
         for (Part p : Inventory.getAllParts()) {
@@ -195,6 +220,15 @@ public class MainController implements Initializable {
         return false;
     }
 
+    /**
+     * This method searches through Inventory and deletes a Part with a matching ID.
+     * The method takes a Part ID as a parameter and deletes the matching
+     * Part in Inventory.
+     *
+     * @param id The Part ID for the object being deleted.
+     * @return Returns true if the Part object is removed from the
+     * ObservableList, and returns false if item is not found.
+     */
     public boolean deletePart(int id) {
         for (Part p : Inventory.getAllParts()) {
             if (p.getId() == id) {
@@ -233,27 +267,20 @@ public class MainController implements Initializable {
     public ObservableList<Part> filterPart(String name) {
         int index = -1; // to see how many items are in the list
 
-        // Clear list if not empty
-        if (!Inventory.getAllFilteredParts().isEmpty()) {
+        if (!Inventory.getAllFilteredParts().isEmpty()) // Clears list if not empty
             Inventory.getAllFilteredParts().clear();
-        }
 
-        // Any matching strings are put in a filtered ObservableList<Part>
-        for (Part part : Inventory.getAllParts()) {
+        for (Part part : Inventory.getAllParts()) { // Matching strings added to ObservableList<Part>
             if (part.getName().contains(name)) {
                 Inventory.getAllFilteredParts().add(part);
                 index++;
             }
-
-            // If there is a single item, highlight it.
-            // Otherwise clear any highlights.
-            if (index == 0) {
+            if (index == 0) { // Highlight if single item listed
                 partTableView.getSelectionModel().select(part);
-            } else {
+            } else { // Remove highlights if more than one item listed
                 partTableView.getSelectionModel().clearSelection();
             }
         }
-
         // returns the original list if nothing returns filtered
         if (Inventory.getAllFilteredParts().isEmpty()) {
             return Inventory.getAllParts();
@@ -262,6 +289,14 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * This method searches Inventory by Product ID.
+     * The method lets user know if a Product exists.
+     *
+     * @param id The Product ID being searched for.
+     * @return Returns true if the Product ID matches one in Inventory,
+     * and returns false if no match is found.
+     */
     public boolean searchProduct(int id) {
         for (Product product : Inventory.getAllProducts()) {
             if (product.getId() == id)
@@ -280,41 +315,15 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        partTableView.setItems(Inventory.getAllParts()); // set up table view, let table know which objects will be working with.
 
-        // filtered list
-//        partTableView.setItems(filterPart("o"));
+        // set up table view, let table know which objects will be working with.
+        partTableView.setItems(Inventory.getAllParts());
 
-        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id")); // get id, and populate cell of ID column
+        // get id, and populate cell of ID column
+        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-
-        // searching
-//        if(searchPart(9)){
-//            System.out.println("found...");
-//        } else {
-//            System.out.println("not found...");
-//        }
-
-        // updating
-//        if (updatePart(55, new InHouse(9, "bakery", 355.55, 6, 1, 20, "tmahine323"))){
-//            System.out.println("Update successful");
-//        } else {
-//            System.out.println("Update failed");
-//        }
-
-        // deleting
-//        if(deletePart(3)){
-//            System.out.println("Deleted!");
-//        } else {
-//            System.out.println("No match!");
-//        }
-
-        // highlight row
-        // get reference to TableView object
-//        partTableView.getSelectionModel().select(selectPart(3));
     }
 }
 

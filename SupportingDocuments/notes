@@ -8,3 +8,34 @@ TableView methods
 -getSelectedIndex() : index # of any item selected
 -getSelectedItem() : object of selected item
 -select() : selectively highlights a row in TableView
+
+
+// filtered list
+partTableView.setItems(filterPart("o"));
+
+// searching
+if(searchPart(9)){
+    System.out.println("found...");
+} else {
+    System.out.println("not found...");
+}
+
+// updating
+if (updatePart(55, new InHouse(9, "bakery", 355.55, 6, 1, 20, "tmahine323"))){
+    System.out.println("Update successful");
+} else {
+    System.out.println("Update failed");
+}
+
+
+
+// deleting
+if(deletePart(3)){
+    System.out.println("Deleted!");
+} else {
+    System.out.println("No match!");
+}
+
+// highlight row
+// get reference to TableView object
+partTableView.getSelectionModel().select(selectPart(3));
