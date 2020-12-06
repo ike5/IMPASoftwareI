@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,16 +12,19 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
 import model.Part;
 import model.Product;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class creates the Main controller.
+ */
 public class MainController implements Initializable {
     Stage stage;  // Every application needs a stage.
     Parent scene; // Can have as many scenes as you want.
@@ -161,6 +165,11 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    void onKeyTypedSearchPartIdOrName(KeyEvent event) {
+        partTableView.setItems(filterPart(searchPartTextField.getText()));
+    }
+
     public boolean searchPart(int id) {
         // search method will set the id
         for (Part part : Inventory.getAllParts()) {
@@ -202,6 +211,38 @@ public class MainController implements Initializable {
         return null;
     }
 
+    public ObservableList<Part> filterPart(String name){
+        int index = -1; // to see how many items are in the list
+
+        // Clear list if not empty
+        if(!Inventory.getAllFilteredParts().isEmpty()){
+            Inventory.getAllFilteredParts().clear();
+        }
+
+        // Any matching strings are put in a filtered ObservableList<Part>
+        for(Part part : Inventory.getAllParts()){
+            if(part.getName().contains(name)){
+                Inventory.getAllFilteredParts().add(part);
+                index++;
+            }
+
+            // If there is a single item, highlight it.
+            // Otherwise clear any highlights.
+            if (index == 0){
+               partTableView.getSelectionModel().select(part);
+            } else {
+                partTableView.getSelectionModel().clearSelection();
+            }
+        }
+
+        // returns the original list if nothing returns filtered
+        if(Inventory.getAllFilteredParts().isEmpty()){
+            return Inventory.getAllParts();
+        } else {
+            return Inventory.getAllFilteredParts();
+        }
+    }
+
     public boolean searchProduct(int id) {
         for (Product product : Inventory.getAllProducts()) {
             if (product.getId() == id)
@@ -214,10 +255,15 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partTableView.setItems(Inventory.getAllParts()); // set up table view, let table know which objects will be working with.
 
+        // filtered list
+//        partTableView.setItems(filterPart("o"));
+
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id")); // get id, and populate cell of ID column
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+
 
         // searching
 //        if(searchPart(9)){
@@ -242,7 +288,7 @@ public class MainController implements Initializable {
 
         // highlight row
         // get reference to TableView object
-        partTableView.getSelectionModel().select(selectPart(3));
+//        partTableView.getSelectionModel().select(selectPart(3));
     }
 }
 

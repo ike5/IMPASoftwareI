@@ -9,6 +9,9 @@ import model.InHouse;
 import model.Inventory;
 import model.Outsourced;
 
+/**
+ * This is the main class that the application launches from.
+ */
 public class Main extends Application {
 
     @Override
