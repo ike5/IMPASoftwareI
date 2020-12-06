@@ -27,59 +27,59 @@ import java.util.ResourceBundle;
  * This class creates the Main controller.
  */
 public class MainController implements Initializable {
-    Stage stage;  // Every application needs a stage.
+    Stage stage;  // Stage required to display application.
     Parent scene; // Can have as many scenes as you want.
 
     @FXML
-    private TextField searchPartTextField;
+    private TextField searchPartTextField; // Search box for Parts TableView
 
     @FXML
-    private TableView<Part> partTableView;
+    private TableView<Part> partTableView; // The Parts TableView
 
     @FXML
-    private TableColumn<Part, Integer> partIdColumn; // second column, specify wrapper class data type
+    private TableColumn<Part, Integer> partIdColumn; // Part ID column
 
     @FXML
-    private TableColumn<Part, String> partNameColumn;
+    private TableColumn<Part, String> partNameColumn; // Part Name column
 
     @FXML
-    private TableColumn<Part, Integer> partInventoryLevelColumn;
+    private TableColumn<Part, Integer> partInventoryLevelColumn; // Part Inv column
 
     @FXML
-    private TableColumn<Part, Double> partPricePerUnitColumn;
+    private TableColumn<Part, Double> partPricePerUnitColumn; // Part Price column
+
+//    @FXML
+//    private Button addPartButton;
+//
+//    @FXML
+//    private Button modifyPartButton;
+//
+//    @FXML
+//    private Button deletePartButton;
 
     @FXML
-    private Button addPartButton;
+    private TextField searchProductTextField; // Search box for Product TableView
 
     @FXML
-    private Button modifyPartButton;
+    private TableView<Part> productTableView; // The Product TableView
 
     @FXML
-    private Button deletePartButton;
+    private TableColumn<Part, Integer> productIdColumn; // Product ID column
 
     @FXML
-    private TextField searchProductTextField;
+    private TableColumn<Part, String> productNameColumn; // Product Name column
 
     @FXML
-    private TableView<Part> productTableView;
+    private TableColumn<Part, Integer> productInventoryLevelColumn; // Product Inv column
 
     @FXML
-    private TableColumn<Part, Integer> productIdColumn;
-
-    @FXML
-    private TableColumn<Part, String> productNameColumn;
-
-    @FXML
-    private TableColumn<Part, Integer> productInventoryLevelColumn;
-
-    @FXML
-    private TableColumn<Part, Double> productPricePerUnitColumn;
-
+    private TableColumn<Part, Double> productPricePerUnitColumn; // Product Price column
 
     /**
-     * Button opens new Add Part window.
+     * The Add button opens the AddPart stage.
+     * The button responds to click events to load and display the AddPart stage.
      *
-     * @param event button click
+     * @param event The event object generated after clicking the Add button.
      * @throws IOException
      */
     @FXML
@@ -95,9 +95,10 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Button opens new Add Product window.
+     * The Add button opens the AddProduct stage.
+     * The button responds to click events to load and display the AddProduct stage.
      *
-     * @param event button click
+     * @param event The event object generated after clicking the Add button.
      * @throws IOException
      */
     @FXML
@@ -122,9 +123,10 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Button exits application.
+     * The Exit button closes the application.
+     * The Exit button calls the exit() method to close the application.
      *
-     * @param event button click
+     * @param event The events object generated after clicking the Exit button.
      */
     @FXML
     void onActionExit(ActionEvent event) {
