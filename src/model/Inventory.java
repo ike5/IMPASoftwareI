@@ -11,12 +11,52 @@ public class Inventory {
     /**
      * Adds a Part object to an ObservableList array.
      *
-     * @param part
+     * @param newPart
      */
-    public static void addPart(Part part) {
-        allParts.add(part);
+    public static void addPart(Part newPart) {
+        allParts.add(newPart);
     }
 
+    /**
+     * Adds a Product object to an ObservableList array.
+     *
+     * @param newProduct
+     */
+    public static void addProduct(Product newProduct) {
+        allProducts.add(newProduct);
+    }
+
+//    public static Part lookupPart(int partId) {
+//        return allParts.contains();
+//   }
+
+//    public static Product lookupProduct(int productId){
+//        return
+//    }
+
+//    public static ObservableList<Part> lookupPart(String partName) {
+//        return
+//    }
+
+//    public static ObservableList<Product> lookupProduct(){
+//        return
+//    }
+
+    public static void updatePart(int index, Part selectedPart){
+
+    }
+
+    public static void updateProduct(int index, Product newProeuct){
+
+    }
+
+//    public static boolean deletePart(Part selectedPart){
+//        return false;
+//    }
+
+//    public static boolean deleteProduct(Product selectedProduct){
+//        return false;
+//    }
 
     /**
      * Returns an ObservableList of Part objects.
@@ -27,20 +67,13 @@ public class Inventory {
 
 
     /**
-     * Adds a Product object to an ObservableList array.
-     *
-     * @param product
-     */
-    public static void addProduct(Product product) {
-        allProducts.add(product);
-    }
-
-
-    /**
      * Returns an ObservableList of Product objects.
+     *
      * @return
      */
     public static ObservableList<Product> getAllProducts() {
         return allProducts;
     }
+
+
 }
