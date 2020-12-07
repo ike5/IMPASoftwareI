@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     Stage stage;  // Stage required to display application.
     Parent scene; // Can have as many scenes as you want.
-    public static int makeId;
+    public static int makeId; // Provides a unique ID among all packages.
 
     @FXML
     private TextField searchPartTextField; // Search box for Parts TableView

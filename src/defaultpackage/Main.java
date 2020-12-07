@@ -1,5 +1,6 @@
 package defaultpackage;
 
+import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,12 +38,12 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         // Create default Part objects
-        InHouse inHouse1 = new InHouse(1, "Flash drive", 5.99, 5, 1, 10, "234224");
-        InHouse inHouse2 = new InHouse(2, "Converter", 7.33, 2, 1, 10, "234848");
-        InHouse inHouse3 = new InHouse(3, "USB wire", 2.99, 4, 1, 16, "2342342");
-        Outsourced outsourced1 = new Outsourced(4, "Led lights", 0.05, 40, 5, 100, "LinZhou company");
-        Outsourced outsourced2 = new Outsourced(5, "Plastic covers", 6.95, 2, 1, 5, "ShenZhou Ltd.");
-        Outsourced outsourced3 = new Outsourced(6, "Bottles", 2.95, 4, 1, 15, "American bottle company");
+        InHouse inHouse1 = new InHouse(++MainController.makeId, "Flash drive", 5.99, 5, 1, 10, "234224");
+        InHouse inHouse2 = new InHouse(++MainController.makeId, "Converter", 7.33, 2, 1, 10, "234848");
+        InHouse inHouse3 = new InHouse(++MainController.makeId, "USB wire", 2.99, 4, 1, 16, "2342342");
+        Outsourced outsourced1 = new Outsourced(++MainController.makeId, "Led lights", 0.05, 40, 5, 100, "LinZhou company");
+        Outsourced outsourced2 = new Outsourced(++MainController.makeId, "Plastic covers", 6.95, 2, 1, 5, "ShenZhou Ltd.");
+        Outsourced outsourced3 = new Outsourced(++MainController.makeId, "Bottles", 2.95, 4, 1, 15, "American bottle company");
 
         // Add Part objects to Inventory.
         Inventory.addPart(inHouse1);
