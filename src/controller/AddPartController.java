@@ -85,41 +85,34 @@ public class AddPartController implements Initializable {
     }
 
     @FXML
-    void onActionSavePart(ActionEvent event) throws IOException{
-
+    void onActionSavePart(ActionEvent event) throws IOException {
         int id = ++MainController.makePartId;
-        String name = namePartTextField.getText();
         int inv = Integer.parseInt(invPartTextField.getText());
-        double price = Double.parseDouble(pricePartTextField.getText());
         int max = Integer.parseInt(maxPartTextField.getText());
         int min = Integer.parseInt(minPartTextField.getText());
+        double price = Double.parseDouble(pricePartTextField.getText());
+        String name = namePartTextField.getText();
         String companyNameOrMachineId = companyOrMachineIdPartTextField.getText();
-        int convert;
-
 
 
         // select correct radio button
         // then pass to ObservableList<Part> object
         if (inHousePartRadioButton.isSelected()) {
-            try{
-//                if(isNumeric(companyNameOrMachineId));
-
-                convert = Integer.parseInt(companyNameOrMachineId);
-                Inventory.addPart(new InHouse(id, name, price, inv, min, max, convert));
-            } catch (NumberFormatException e){
-                System.out.println("Not a number");
+            try { // check if digit
+                Inventory.addPart(new InHouse(id, name, price, inv, min, max, Integer.parseInt(companyNameOrMachineId)));
+            } catch (NumberFormatException e) {
+                System.out.println("Is a digit: " + isNumeric(companyNameOrMachineId));
             }
         } else {
             Inventory.addPart(new Outsourced(id, name, price, inv, min, max, companyNameOrMachineId));
         }
 
 
-
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        // Set Stage
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
-
     }
 
     @Override
@@ -128,8 +121,16 @@ public class AddPartController implements Initializable {
         labelPartCompanyOrMachineID.setText("Machine ID"); // Default label
     }
 
-    public static boolean isNumeric(final String str){
-        if(str == null || str.length() == 0){
+
+    /**
+     * This method tests a String to see if it only contains digits.
+     *
+     * @param str The string being tested.
+     * @return Returns true if only digits, returns false if contains
+     * other characters or is null or is of length 0.
+     */
+    public static boolean isNumeric(final String str) {
+        if (str == null || str.length() == 0) {
             return false;
         }
         return str.chars().allMatch(Character::isDigit); // (Character c) -> c.isDigit()
