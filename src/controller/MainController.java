@@ -57,19 +57,19 @@ public class MainController implements Initializable {
     private TextField searchProductTextField; // Search box for Product TableView
 
     @FXML
-    private TableView<Part> productTableView; // The Product TableView
+    private TableView<Product> productTableView; // The Product TableView
 
     @FXML
-    private TableColumn<Part, Integer> productIdColumn; // Product ID column
+    private TableColumn<Product, Integer> productIdColumn; // Product ID column
 
     @FXML
-    private TableColumn<Part, String> productNameColumn; // Product Name column
+    private TableColumn<Product, String> productNameColumn; // Product Name column
 
     @FXML
-    private TableColumn<Part, Integer> productInventoryLevelColumn; // Product Inv column
+    private TableColumn<Product, Integer> productInventoryLevelColumn; // Product Inv column
 
     @FXML
-    private TableColumn<Part, Double> productPricePerUnitColumn; // Product Price column
+    private TableColumn<Product, Double> productPricePerUnitColumn; // Product Price column
 
     /**
      * The Add button opens the AddPart stage.
