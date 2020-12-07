@@ -18,6 +18,7 @@ import model.InHouse;
 import model.Inventory;
 import model.Part;
 import model.Product;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -114,6 +115,10 @@ public class MainController implements Initializable {
     @FXML
     void onActionDeletePart(ActionEvent event) {
         System.out.println("Delete part button clicked!");
+
+        Part part = selectPart(partTableView.getSelectionModel().getSelectedItem().getId());
+        deletePart(part.getId());
+        partTableView.setItems(filterPart(searchPartTextField.getText()));
     }
 
     @FXML
@@ -129,8 +134,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionExit(ActionEvent event) {
-        // Closes entire application
-        System.exit(0);
+        System.exit(0); // Closes application
     }
 
     /**
@@ -237,8 +241,6 @@ public class MainController implements Initializable {
         }
         return false;
     }
-
-    // method to return Part object from id
 
     /**
      * This method finds and returns a Part object.
