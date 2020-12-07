@@ -114,8 +114,8 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionDeletePart(ActionEvent event) {
-        Inventory.deletePart(partTableView.getSelectionModel().getSelectedItem()); // deletes Part obj
-        partTableView.setItems(filterPart(searchPartTextField.getText())); // refresh filteredTable
+        Inventory.deletePart(partTableView.getSelectionModel().getSelectedItem()); // deletes Part object
+        partTableView.setItems(filterPart(searchPartTextField.getText())); // refresh filtered table
     }
 
     /**
@@ -128,6 +128,8 @@ public class MainController implements Initializable {
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
         System.out.println("Delete product button clicked!");
+        Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
+        productTableView.setItems(filterProduct(searchProductTextField.getText())); // refresh filtered table
     }
 
     /**
@@ -189,7 +191,7 @@ public class MainController implements Initializable {
 
     @FXML
     void onKeyTypedSearchProductIdOrName(KeyEvent event) {
-//        productTableView.setItems();
+        productTableView.setItems(filterProduct(searchProductTextField.getText()));
     }
 
     /**
@@ -232,12 +234,13 @@ public class MainController implements Initializable {
 //    }
 
     /**
-     * This method filters searched items on a TableView.
-     * This method is used to search a TableView object and return items matching parameters.
+     * This method filters searched items on a TableView with Part objects.
+     * This method is used to search a Part object by name and return matching items.
      *
      * @param name A String representing the name of a Part or ID.
-     * @return Returns an ObservableList object of Part type containing all matches, or
-     * the original ObservableList if no matches are found.
+     * @return Returns all filtered Parts in an ObservableList<Part> if the
+     * filtered parts list is not empty. Returns original ObservableList<Part>
+     * if there are no filtered Parts.
      */
     public ObservableList<Part> filterPart(String name) {
         // to see how many items are in the list
@@ -253,7 +256,6 @@ public class MainController implements Initializable {
                 getAllFilteredParts().add(part);
                 index++;
             }
-
             // Highlight if single item listed
             if (index == 0) {
                 partTableView.getSelectionModel().select(part);
@@ -262,12 +264,49 @@ public class MainController implements Initializable {
                 partTableView.getSelectionModel().clearSelection();
             }
         }
-
-        // returns the original list if nothing returns filtered
+        // Returns original list if nothing filtered
         if (getAllFilteredParts().isEmpty()) {
             return Inventory.getAllParts();
         } else {
             return getAllFilteredParts();
+        }
+    }
+
+    /**
+     * This method filters searched items on a TableView with Product objects.
+     * This method is used to search a Product object by name and return matching items.
+     *
+     * @param name A String representing the name of a Product or ID.
+     * @return Returns all filtered Products in an ObservableList<Product> if the
+     * filtered products list is not empty. Returns original ObservableList<Product>
+     * if there are no filtered Products.
+     */
+    public ObservableList<Product> filterProduct(String name) {
+        // to see how many items are in the list
+        int index = -1;
+
+        // Clears list if not empty
+        if (!getAllFilteredProducts().isEmpty())
+            getAllFilteredProducts().clear();
+
+        // Matching strings are added to ObservableList<Product>
+        for (Product product : Inventory.getAllProducts()) {
+            if (product.getName().contains(name)) {
+                getAllFilteredProducts().add(product);
+                index++;
+            }
+            // Highlight if single item listed
+            if (index == 0) {
+                productTableView.getSelectionModel().select(product);
+            } else {
+                productTableView.getSelectionModel().clearSelection();
+            }
+        }
+        // Returns original list if nothing filtered
+        if (getAllFilteredProducts().isEmpty()) {
+            return Inventory.getAllProducts();
+        } else {
+            return getAllFilteredProducts();
         }
     }
 
