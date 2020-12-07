@@ -30,8 +30,10 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     Stage stage;  // Stage required to display application.
     Parent scene; // Can have as many scenes as you want.
-    public static int makeId; // Provides a unique ID among all packages.
+    public static int makePartId; // Provides a unique ID for parts among all packages.
+    public static int makeProductId; // Provides a unique ID for products among all packages.
     private static ObservableList<Part> allFilteredParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> allFilteredProducts = FXCollections.observableArrayList();
 
     @FXML
     private TextField searchPartTextField; // Search box for Parts TableView
@@ -116,6 +118,13 @@ public class MainController implements Initializable {
         partTableView.setItems(filterPart(searchPartTextField.getText())); // refresh filteredTable
     }
 
+    /**
+     * The Delete button removes a selected Product object from Inventory.
+     * Note that deleting from either the filtered or non-filtered list
+     * refreshes the TableView with the correct Inventory Products.
+     *
+     * @param event The event object generated after clicking the Delete button.
+     */
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
         System.out.println("Delete product button clicked!");
@@ -178,6 +187,11 @@ public class MainController implements Initializable {
         partTableView.setItems(filterPart(searchPartTextField.getText()));
     }
 
+    @FXML
+    void onKeyTypedSearchProductIdOrName(KeyEvent event) {
+//        productTableView.setItems();
+    }
+
     /**
      * This method is used to see whether a Part object exists in Inventory.
      * The method iterates through Inventory and stops when a match is found.
@@ -226,22 +240,29 @@ public class MainController implements Initializable {
      * the original ObservableList if no matches are found.
      */
     public ObservableList<Part> filterPart(String name) {
-        int index = -1; // to see how many items are in the list
+        // to see how many items are in the list
+        int index = -1;
 
-        if (!getAllFilteredParts().isEmpty()) // Clears list if not empty
+        // Clears list if not empty
+        if (!getAllFilteredParts().isEmpty())
             getAllFilteredParts().clear();
 
-        for (Part part : Inventory.getAllParts()) { // Matching strings added to ObservableList<Part>
+        // Matching strings added to ObservableList<Part>
+        for (Part part : Inventory.getAllParts()) {
             if (part.getName().contains(name)) {
                 getAllFilteredParts().add(part);
                 index++;
             }
-            if (index == 0) { // Highlight if single item listed
+
+            // Highlight if single item listed
+            if (index == 0) {
                 partTableView.getSelectionModel().select(part);
-            } else { // Remove highlights if more than one item listed
+            } else {
+                // Remove highlights if more than one item listed
                 partTableView.getSelectionModel().clearSelection();
             }
         }
+
         // returns the original list if nothing returns filtered
         if (getAllFilteredParts().isEmpty()) {
             return Inventory.getAllParts();
@@ -278,6 +299,17 @@ public class MainController implements Initializable {
     }
 
     /**
+     * This method returns any filtered products.
+     * Items can be added to and removed via this method by obtaining
+     * the ObservableList for the products filtered.
+     *
+     * @return Returns an ObservableList with any items added to filtered products.
+     */
+    public static ObservableList<Product> getAllFilteredProducts() {
+        return allFilteredProducts;
+    }
+
+    /**
      * This method initializes upon staging of window.
      * The method sets up the TableView and provides a way to link the columns to their
      * respective controllers.
@@ -290,12 +322,18 @@ public class MainController implements Initializable {
 
         // set up table view, let table know which objects will be working with.
         partTableView.setItems(Inventory.getAllParts());
+        productTableView.setItems(Inventory.getAllProducts());
 
         // get id, and populate cell of ID column
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPricePerUnitColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPricePerUnitColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 }
 
