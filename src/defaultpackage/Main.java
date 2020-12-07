@@ -39,9 +39,9 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         // Create default Part objects
-        InHouse inHouse1 = new InHouse(++MainController.makePartId, "Flash drive", 5.99, 5, 1, 10, "234224");
-        InHouse inHouse2 = new InHouse(++MainController.makePartId, "Converter", 7.33, 2, 1, 10, "234848");
-        InHouse inHouse3 = new InHouse(++MainController.makePartId, "USB wire", 2.99, 4, 1, 16, "2342342");
+        InHouse inHouse1 = new InHouse(++MainController.makePartId, "Flash drive", 5.99, 5, 1, 10, 234224);
+        InHouse inHouse2 = new InHouse(++MainController.makePartId, "Converter", 7.33, 2, 1, 10, 234848);
+        InHouse inHouse3 = new InHouse(++MainController.makePartId, "USB wire", 2.99, 4, 1, 16, 2342342);
         Outsourced outsourced1 = new Outsourced(++MainController.makePartId, "Led lights", 0.05, 40, 5, 100, "LinZhou company");
         Outsourced outsourced2 = new Outsourced(++MainController.makePartId, "Plastic covers", 6.95, 2, 1, 5, "ShenZhou Ltd.");
         Outsourced outsourced3 = new Outsourced(++MainController.makePartId, "Bottles", 2.95, 4, 1, 15, "American bottle company");

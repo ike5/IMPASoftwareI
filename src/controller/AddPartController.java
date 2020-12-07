@@ -15,6 +15,7 @@ import model.Outsourced;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.lang.*;
 
 public class AddPartController implements Initializable {
     Stage stage;
@@ -93,11 +94,21 @@ public class AddPartController implements Initializable {
         int max = Integer.parseInt(maxPartTextField.getText());
         int min = Integer.parseInt(minPartTextField.getText());
         String companyNameOrMachineId = companyOrMachineIdPartTextField.getText();
+        int convert;
+
+
 
         // select correct radio button
         // then pass to ObservableList<Part> object
         if (inHousePartRadioButton.isSelected()) {
-            Inventory.addPart(new InHouse(id, name, price, inv, min, max, companyNameOrMachineId));
+            try{
+//                if(isNumeric(companyNameOrMachineId));
+
+                convert = Integer.parseInt(companyNameOrMachineId);
+                Inventory.addPart(new InHouse(id, name, price, inv, min, max, convert));
+            } catch (NumberFormatException e){
+                System.out.println("Not a number");
+            }
         } else {
             Inventory.addPart(new Outsourced(id, name, price, inv, min, max, companyNameOrMachineId));
         }
@@ -115,5 +126,12 @@ public class AddPartController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         labelPartCompanyOrMachineID.setText("Machine ID"); // Default label
+    }
+
+    public static boolean isNumeric(final String str){
+        if(str == null || str.length() == 0){
+            return false;
+        }
+        return str.chars().allMatch(Character::isDigit); // (Character c) -> c.isDigit()
     }
 }
