@@ -30,24 +30,44 @@ public class Inventory {
         allProducts.add(newProduct);
     }
 
-//    public static Part lookupPart(int partId) {
-//        return allParts.contains();
-//   }
+    public static Part lookupPart(int partId) {
+        for (Part part : allParts){
+            if (part.getId() == partId){
+                return part;
+            }
+        }
+        return null;
+   }
 
-//    public static Product lookupProduct(int productId){
-//        return
-//    }
+    public static Product lookupProduct(int productId){
+        for (Product product : allProducts){
+            if(product.getId() == productId){
+                return product;
+            }
+        }
+        return null;
+    }
 
-//    public static ObservableList<Part> lookupPart(String partName) {
-//        return
-//    }
+    public static ObservableList<Part> lookupPart(String partName) {
+        for(Part part : allParts){
+            if(part.getName().contains(partName)){
+                return allParts;
+            }
+        }
+        return null;
+    }
 
-//    public static ObservableList<Product> lookupProduct(){
-//        return
-//    }
+    public static ObservableList<Product> lookupProduct(String productName){
+        for(Product product : allProducts){
+            if(product.getName().contains(productName)){
+                return allProducts;
+            }
+        }
+        return null;
+    }
 
     public static void updatePart(int index, Part selectedPart) {
-
+        
     }
 
     public static void updateProduct(int index, Product newProduct) {

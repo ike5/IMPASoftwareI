@@ -29,6 +29,7 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     Stage stage;  // Stage required to display application.
     Parent scene; // Can have as many scenes as you want.
+    public static int makeId;
 
     @FXML
     private TextField searchPartTextField; // Search box for Parts TableView
@@ -47,15 +48,6 @@ public class MainController implements Initializable {
 
     @FXML
     private TableColumn<Part, Double> partPricePerUnitColumn; // Part Price column
-
-//    @FXML
-//    private Button addPartButton;
-//
-//    @FXML
-//    private Button modifyPartButton;
-//
-//    @FXML
-//    private Button deletePartButton;
 
     @FXML
     private TextField searchProductTextField; // Search box for Product TableView
@@ -84,9 +76,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionAddPart(ActionEvent event) throws IOException {
-        // Cast to let program know source is a button
-        // then cast to let know window is a stage.
-        // Get source of event and let handler know event type is a Button.
+        // Get event source from button
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         // Load resources from view directory
         scene = FXMLLoader.load(getClass().getResource("/view/AddPart.fxml"));
@@ -103,8 +93,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionAddProduct(ActionEvent event) throws IOException {
-        // Cast to let program know source is a button
-        // then cast to let know window is a stage.
+        // Get event source from button
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         // Load resources from view directory
         scene = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
@@ -112,13 +101,17 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /**
+     * The Delete button removes a selected Part object from Inventory.
+     * Note that deleting from either the filtered or non-filtered list
+     * refreshes the TableView with the correct Inventory Parts.
+     *
+     * @param event The event object generated after clicking the Delete button.
+     */
     @FXML
     void onActionDeletePart(ActionEvent event) {
-        System.out.println("Delete part button clicked!");
-
-        Part part = selectPart(partTableView.getSelectionModel().getSelectedItem().getId());
-        deletePart(part.getId());
-        partTableView.setItems(filterPart(searchPartTextField.getText()));
+        deletePart(partTableView.getSelectionModel().getSelectedItem().getId()); // deletes Part obj
+        partTableView.setItems(filterPart(searchPartTextField.getText())); // refresh filteredTable
     }
 
     @FXML
@@ -146,8 +139,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionModifyPart(ActionEvent event) throws IOException {
-        // Cast to let program know source is a button
-        // then cast to let know window is a stage.
+        // Get event source from button
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         // Load resources from view directory
         scene = FXMLLoader.load(getClass().getResource("/view/ModifyPart.fxml"));
@@ -164,8 +156,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionModifyProduct(ActionEvent event) throws IOException {
-        // Cast to let program know source is a Button
-        // then cast to let know window is a stage.
+        // Get event source from button
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         // Load resources from view directory
         scene = FXMLLoader.load(getClass().getResource("/view/ModifyProduct.fxml"));
