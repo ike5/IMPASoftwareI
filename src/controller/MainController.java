@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ public class MainController implements Initializable {
     Stage stage;  // Stage required to display application.
     Parent scene; // Can have as many scenes as you want.
     public static int makeId; // Provides a unique ID among all packages.
+    private static ObservableList<Part> allFilteredParts = FXCollections.observableArrayList();
 
     @FXML
     private TextField searchPartTextField; // Search box for Parts TableView
@@ -110,7 +112,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionDeletePart(ActionEvent event) {
-        deletePart(partTableView.getSelectionModel().getSelectedItem().getId()); // deletes Part obj
+        Inventory.deletePart(partTableView.getSelectionModel().getSelectedItem()); // deletes Part obj
         partTableView.setItems(filterPart(searchPartTextField.getText())); // refresh filteredTable
     }
 
@@ -192,62 +194,28 @@ public class MainController implements Initializable {
         return false;
     }
 
-    /**
-     * This method takes in a Part ID and replaces it with a new Part object.
-     * The method searches through Inventory to find the matching Part,
-     * then replaces it with a new Part object as provided by the parameter.
-     *
-     * @param id   The ID of the Part object to be replaced.
-     * @param part The replacing Part object.
-     * @return Returns true if Part ID matches: the Part is then replaced.
-     * Returns false if not match found and no changes are made.
-     */
-    public boolean updatePart(int id, Part part) {
-        int index = -1;
-        for (Part p : Inventory.getAllParts()) {
-            index++; // first time around index will be 0
-            // if there's a match we will perform the update
-            if (p.getId() == id) {
-                Inventory.getAllParts().set(index, part); // set(value of index at match, part that wants to replace)
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * This method searches through Inventory and deletes a Part with a matching ID.
-     * The method takes a Part ID as a parameter and deletes the matching
-     * Part in Inventory.
-     *
-     * @param id The Part ID for the object being deleted.
-     * @return Returns true if the Part object is removed from the
-     * ObservableList, and returns false if item is not found.
-     */
-    public boolean deletePart(int id) {
-        for (Part p : Inventory.getAllParts()) {
-            if (p.getId() == id) {
-                return Inventory.getAllParts().remove(p);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * This method finds and returns a Part object.
-     * Using id, this method iterates through Inventory and returns the first match.
-     *
-     * @param id The integer id of the Part object being requested.
-     * @return Returns a Part object.
-     */
-    public Part selectPart(int id) {
-        for (Part p : Inventory.getAllParts()) {
-            if (p.getId() == id) {
-                return p;
-            }
-        }
-        return null;
-    }
+//    /**
+//     * This method takes in a Part ID and replaces it with a new Part object.
+//     * The method searches through Inventory to find the matching Part,
+//     * then replaces it with a new Part object as provided by the parameter.
+//     *
+//     * @param id   The ID of the Part object to be replaced.
+//     * @param part The replacing Part object.
+//     * @return Returns true if Part ID matches: the Part is then replaced.
+//     * Returns false if not match found and no changes are made.
+//     */
+//    public boolean updatePart(int id, Part part) {
+//        int index = -1;
+//        for (Part p : Inventory.getAllParts()) {
+//            index++; // first time around index will be 0
+//            // if there's a match we will perform the update
+//            if (p.getId() == id) {
+//                Inventory.getAllParts().set(index, part); // set(value of index at match, part that wants to replace)
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * This method filters searched items on a TableView.
@@ -260,12 +228,12 @@ public class MainController implements Initializable {
     public ObservableList<Part> filterPart(String name) {
         int index = -1; // to see how many items are in the list
 
-        if (!Inventory.getAllFilteredParts().isEmpty()) // Clears list if not empty
-            Inventory.getAllFilteredParts().clear();
+        if (!getAllFilteredParts().isEmpty()) // Clears list if not empty
+            getAllFilteredParts().clear();
 
         for (Part part : Inventory.getAllParts()) { // Matching strings added to ObservableList<Part>
             if (part.getName().contains(name)) {
-                Inventory.getAllFilteredParts().add(part);
+                getAllFilteredParts().add(part);
                 index++;
             }
             if (index == 0) { // Highlight if single item listed
@@ -275,10 +243,10 @@ public class MainController implements Initializable {
             }
         }
         // returns the original list if nothing returns filtered
-        if (Inventory.getAllFilteredParts().isEmpty()) {
+        if (getAllFilteredParts().isEmpty()) {
             return Inventory.getAllParts();
         } else {
-            return Inventory.getAllFilteredParts();
+            return getAllFilteredParts();
         }
     }
 
@@ -296,6 +264,17 @@ public class MainController implements Initializable {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * This method returns any filtered parts.
+     * Items can be added to and removed via this method by obtaining
+     * the ObservableList for the parts filtered.
+     *
+     * @return Returns an ObservableList with any items added to filtered parts.
+     */
+    public static ObservableList<Part> getAllFilteredParts() {
+        return allFilteredParts;
     }
 
     /**
