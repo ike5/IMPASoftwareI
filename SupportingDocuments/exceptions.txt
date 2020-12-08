@@ -1,0 +1,5 @@
+try block contains code that might cause the exception
+
+catch block contains code that handles the exception
+    can attach as many catch blocks you want to a single try block
+

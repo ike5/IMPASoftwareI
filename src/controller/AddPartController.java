@@ -14,6 +14,7 @@ import model.Outsourced;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.lang.*;
 
@@ -68,10 +69,15 @@ public class AddPartController implements Initializable {
      */
     @FXML
     void onActionCancelPart(ActionEvent event) throws IOException {
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "All text fields will be cleared, \ndo you want to continue?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
     }
 
     @FXML
@@ -86,33 +92,40 @@ public class AddPartController implements Initializable {
 
     @FXML
     void onActionSavePart(ActionEvent event) throws IOException {
-        int id = ++MainController.makePartId;
-        int inv = Integer.parseInt(invPartTextField.getText());
-        int max = Integer.parseInt(maxPartTextField.getText());
-        int min = Integer.parseInt(minPartTextField.getText());
-        double price = Double.parseDouble(pricePartTextField.getText());
-        String name = namePartTextField.getText();
-        String companyNameOrMachineId = companyOrMachineIdPartTextField.getText();
+        try {
+            int id = ++MainController.makePartId;
+            int inv = Integer.parseInt(invPartTextField.getText());
+            int max = Integer.parseInt(maxPartTextField.getText());
+            int min = Integer.parseInt(minPartTextField.getText());
+            double price = Double.parseDouble(pricePartTextField.getText());
+            String name = namePartTextField.getText();
+            String companyNameOrMachineId = companyOrMachineIdPartTextField.getText();
 
 
-        // select correct radio button
-        // then pass to ObservableList<Part> object
-        if (inHousePartRadioButton.isSelected()) {
-            try { // check if digit
-                Inventory.addPart(new InHouse(id, name, price, inv, min, max, Integer.parseInt(companyNameOrMachineId)));
-            } catch (NumberFormatException e) {
-                System.out.println("Is a digit: " + isNumeric(companyNameOrMachineId));
+            // select correct radio button
+            // then pass to ObservableList<Part> object
+            if (inHousePartRadioButton.isSelected()) {
+                try { // check if digit
+                    Inventory.addPart(new InHouse(id, name, price, inv, min, max, Integer.parseInt(companyNameOrMachineId)));
+                } catch (NumberFormatException e) {
+                    System.out.println("Is a digit: " + isNumeric(companyNameOrMachineId));
+                }
+            } else {
+                Inventory.addPart(new Outsourced(id, name, price, inv, min, max, companyNameOrMachineId));
             }
-        } else {
-            Inventory.addPart(new Outsourced(id, name, price, inv, min, max, companyNameOrMachineId));
+
+
+            // Set Stage
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Please enter a valid value for each Text Field!");
+            alert.showAndWait();
         }
-
-
-        // Set Stage
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
     }
 
     @Override

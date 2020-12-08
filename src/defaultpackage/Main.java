@@ -31,6 +31,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    // Running a static initializer
+    static {
+
+    }
+
     /**
      * This is the main method.
      * Part objects are created and added to Inventory class before launching the application.

@@ -1,0 +1,36 @@
+Alert Methods
+
+-setTitle()         assigns a Title or Heading
+
+-setContentText()   assigns custom message to Dialog Box window
+
+-showAndWait()      displays Dialog box and ensures any code that follows willb e executed once Dialog box closed
+
+Dialog Box Types
+Error               small graphic with OK button
+                    useful: provide feedback w/no further action
+                    AlertType.ERROR enum
+
+Warning             same as Error, but different graphics (yield sign)
+                    AlertType.WARNING enum
+
+Confirmation        OK and Cancel buttons
+                    Option to Confirm an Action or Cancelling that Action
+                    AlertType.CONFIRMATION enum
+
+Modality
+                    Modal by default (can't interact with anything else)
+
+
+Optional            is a container OK or CLOSE button. ArrayList with enums.
+(ex)
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This will clear all text field values, do you want to continue?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }

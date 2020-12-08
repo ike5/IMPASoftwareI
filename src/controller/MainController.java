@@ -32,8 +32,8 @@ public class MainController implements Initializable {
     Parent scene; // Can have as many scenes as you want.
     public static int makePartId; // Provides a unique ID for parts among all packages.
     public static int makeProductId; // Provides a unique ID for products among all packages.
-    private static ObservableList<Part> allFilteredParts = FXCollections.observableArrayList();
-    private static ObservableList<Product> allFilteredProducts = FXCollections.observableArrayList();
+//    private static ObservableList<Part> allFilteredParts = FXCollections.observableArrayList();
+//    private static ObservableList<Product> allFilteredProducts = FXCollections.observableArrayList();
 
     @FXML
     private TextField searchPartTextField; // Search box for Parts TableView
@@ -152,19 +152,28 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionModifyPart(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/ModifyPart.fxml"));
-        loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/ModifyPart.fxml"));
+            loader.load();
 
-        // use getController() to get access to an instance of ModifyPartController
-        ModifyPartController MPartController = loader.getController();
-        MPartController.sendPart(partTableView.getSelectionModel().getSelectedItem());
+            // use getController() to get access to an instance of ModifyPartController
+            ModifyPartController MPartController = loader.getController();
+            MPartController.sendPart(partTableView.getSelectionModel().getSelectedItem());
 
-        // Get event source from button
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        scene = loader.getRoot();
-        stage.setScene(new Scene(scene));
-        stage.show(); // use showAndWait() if you have multiple windows such as a dialog box
+            // Get event source from button
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show(); // use showAndWait() if you have multiple windows such as a dialog box
+        } catch (NullPointerException e) {
+            System.out.println("You need to select an item!");
+            System.out.println("Exception: " + e);
+            System.out.println("Exception: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Exception: " + e);
+        }
+
     }
 
     /**
@@ -217,28 +226,6 @@ public class MainController implements Initializable {
         return false;
     }
 
-//    /**
-//     * This method takes in a Part ID and replaces it with a new Part object.
-//     * The method searches through Inventory to find the matching Part,
-//     * then replaces it with a new Part object as provided by the parameter.
-//     *
-//     * @param id   The ID of the Part object to be replaced.
-//     * @param part The replacing Part object.
-//     * @return Returns true if Part ID matches: the Part is then replaced.
-//     * Returns false if not match found and no changes are made.
-//     */
-//    public boolean updatePart(int id, Part part) {
-//        int index = -1;
-//        for (Part p : Inventory.getAllParts()) {
-//            index++; // first time around index will be 0
-//            // if there's a match we will perform the update
-//            if (p.getId() == id) {
-//                Inventory.getAllParts().set(index, part); // set(value of index at match, part that wants to replace)
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
     /**
      * This method filters searched items on a TableView with Part objects.
@@ -250,33 +237,20 @@ public class MainController implements Initializable {
      * if there are no filtered Parts.
      */
     public ObservableList<Part> filterPart(String name) {
-        // to see how many items are in the list
-        int index = -1;
+        ObservableList<Part> allFilteredParts = FXCollections.observableArrayList();
 
-        // Clears list if not empty
-        if (!getAllFilteredParts().isEmpty())
-            getAllFilteredParts().clear();
-
-        // Matching strings added to ObservableList<Part>
-        for (Part part : Inventory.getAllParts()) {
-            if (part.getName().contains(name)) {
-                getAllFilteredParts().add(part);
-                index++;
-            }
-            // Highlight if single item listed
-            if (index == 0) {
-                partTableView.getSelectionModel().select(part);
-            } else {
-                // Remove highlights if more than one item listed
-                partTableView.getSelectionModel().clearSelection();
-            }
+        for (Part p : Inventory.getAllParts()) {
+            if (p.getName().contains(name))
+                allFilteredParts.add(p);
         }
-        // Returns original list if nothing filtered
-        if (getAllFilteredParts().isEmpty()) {
-            return Inventory.getAllParts();
+
+        if (allFilteredParts.size() == 1) {
+            partTableView.getSelectionModel().select(allFilteredParts.get(0));
         } else {
-            return getAllFilteredParts();
+            partTableView.getSelectionModel().clearSelection();
         }
+
+        return allFilteredParts;
     }
 
     /**
@@ -289,32 +263,21 @@ public class MainController implements Initializable {
      * if there are no filtered Products.
      */
     public ObservableList<Product> filterProduct(String name) {
-        // to see how many items are in the list
-        int index = -1;
+        ObservableList<Product> allFilteredProducts = FXCollections.observableArrayList();
 
-        // Clears list if not empty
-        if (!getAllFilteredProducts().isEmpty())
-            getAllFilteredProducts().clear();
+        for (Product p : Inventory.getAllProducts()) {
+            if (p.getName().contains(name))
+                allFilteredProducts.add(p);
 
-        // Matching strings are added to ObservableList<Product>
-        for (Product product : Inventory.getAllProducts()) {
-            if (product.getName().contains(name)) {
-                getAllFilteredProducts().add(product);
-                index++;
-            }
-            // Highlight if single item listed
-            if (index == 0) {
-                productTableView.getSelectionModel().select(product);
-            } else {
-                productTableView.getSelectionModel().clearSelection();
-            }
         }
-        // Returns original list if nothing filtered
-        if (getAllFilteredProducts().isEmpty()) {
-            return Inventory.getAllProducts();
+
+        if (allFilteredProducts.size() == 1) {
+            productTableView.getSelectionModel().select(allFilteredProducts.get(0));
         } else {
-            return getAllFilteredProducts();
+            productTableView.getSelectionModel().clearSelection();
         }
+
+        return allFilteredProducts;
     }
 
     /**
@@ -333,27 +296,27 @@ public class MainController implements Initializable {
         return false;
     }
 
-    /**
-     * This method returns any filtered parts.
-     * Items can be added to and removed via this method by obtaining
-     * the ObservableList for the parts filtered.
-     *
-     * @return Returns an ObservableList with any items added to filtered parts.
-     */
-    public static ObservableList<Part> getAllFilteredParts() {
-        return allFilteredParts;
-    }
+//    /**
+//     * This method returns any filtered parts.
+//     * Items can be added to and removed via this method by obtaining
+//     * the ObservableList for the parts filtered.
+//     *
+//     * @return Returns an ObservableList with any items added to filtered parts.
+//     */
+//    public static ObservableList<Part> getAllFilteredParts() {
+//        return allFilteredParts;
+//    }
 
-    /**
-     * This method returns any filtered products.
-     * Items can be added to and removed via this method by obtaining
-     * the ObservableList for the products filtered.
-     *
-     * @return Returns an ObservableList with any items added to filtered products.
-     */
-    public static ObservableList<Product> getAllFilteredProducts() {
-        return allFilteredProducts;
-    }
+//    /**
+//     * This method returns any filtered products.
+//     * Items can be added to and removed via this method by obtaining
+//     * the ObservableList for the products filtered.
+//     *
+//     * @return Returns an ObservableList with any items added to filtered products.
+//     */
+//    public static ObservableList<Product> getAllFilteredProducts() {
+//        return allFilteredProducts;
+//    }
 
     /**
      * This method initializes upon staging of window.
