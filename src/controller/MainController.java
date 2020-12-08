@@ -152,12 +152,19 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionModifyPart(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/ModifyPart.fxml"));
+        loader.load();
+
+        // use getController() to get access to an instance of ModifyPartController
+        ModifyPartController MPartController = loader.getController();
+        MPartController.sendPart(partTableView.getSelectionModel().getSelectedItem());
+
         // Get event source from button
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        // Load resources from view directory
-        scene = FXMLLoader.load(getClass().getResource("/view/ModifyPart.fxml"));
+        scene = loader.getRoot();
         stage.setScene(new Scene(scene));
-        stage.show();
+        stage.showAndWait();
     }
 
     /**

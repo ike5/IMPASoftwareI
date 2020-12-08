@@ -39,3 +39,11 @@ if(deletePart(3)){
 // highlight row
 // get reference to TableView object
 partTableView.getSelectionModel().select(selectPart(3));
+
+
+FXMLLoader methods
+-setLocation() is an instance method
+-getController() : instance of another controller, instance method
+-getRoot() : root object/scene, instance method
+
+Casting and instanceof operator

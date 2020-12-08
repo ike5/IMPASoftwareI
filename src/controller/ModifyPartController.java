@@ -3,16 +3,23 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.InHouse;
+import model.Outsourced;
+import model.Part;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ModifyPartController {
+public class ModifyPartController implements Initializable {
     Stage stage;
     Parent scene;
 
@@ -42,6 +49,9 @@ public class ModifyPartController {
 
     @FXML
     private TextField minModifyPartTextField;
+
+    @FXML
+    private Label modifyPartMachineOrCompanyLabel;
 
 //    @FXML
 //    private Button modifyPartSaveButton;
@@ -76,5 +86,33 @@ public class ModifyPartController {
     @FXML
     void onActionModifyPartSaveButton(ActionEvent event) {
 
+    }
+
+    public void sendPart(Part part) {
+        idModifyPartTextField.setText(String.valueOf(part.getId()));
+        nameModifyPartTextfield.setText(part.getName());
+        invModifyPartTextField.setText(String.valueOf(part.getStock()));
+        priceModifyPartTextField.setText(String.valueOf(part.getPrice()));
+        maxModifyPartTextField.setText(String.valueOf(part.getMax()));
+//        machineIdModifyPartTextField.setText(part.machineID);
+        minModifyPartTextField.setText(String.valueOf(part.getMin()));
+        if (part instanceof InHouse) {
+            modifyPartInHouseRButton.setSelected(true);
+            modifyPartOutsourcedRButton.setSelected(false);
+            modifyPartMachineOrCompanyLabel.setText("Machine ID");
+            machineIdModifyPartTextField.setText(String.valueOf(((InHouse) part).getMachineId()));
+        }
+        if(part instanceof Outsourced) {
+            modifyPartOutsourcedRButton.setSelected(true);
+            modifyPartInHouseRButton.setSelected(false);
+            modifyPartMachineOrCompanyLabel.setText("Company Name");
+            machineIdModifyPartTextField.setText(((Outsourced) part).getCompanyName());
+        }
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // note a lot is already initialized with the sendPart() method
     }
 }
