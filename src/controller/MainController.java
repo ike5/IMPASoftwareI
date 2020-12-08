@@ -164,7 +164,7 @@ public class MainController implements Initializable {
         stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         scene = loader.getRoot();
         stage.setScene(new Scene(scene));
-        stage.showAndWait();
+        stage.show(); // use showAndWait() if you have multiple windows such as a dialog box
     }
 
     /**

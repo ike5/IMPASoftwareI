@@ -144,14 +144,14 @@ public class ModifyPartController implements Initializable {
             modifyPartInHouseRButton.setSelected(true);
             modifyPartOutsourcedRButton.setSelected(false);
             modifyPartMachineOrCompanyLabel.setText("Machine ID");
-            machineIdModifyPartTextField.setText(String.valueOf(((InHouse) part).getMachineId()));
+            machineIdModifyPartTextField.setText(String.valueOf(((InHouse) part).getMachineId())); // cast to temporarily get access to subclass methods
         }
 
         if (part instanceof Outsourced) {
             modifyPartOutsourcedRButton.setSelected(true);
             modifyPartInHouseRButton.setSelected(false);
             modifyPartMachineOrCompanyLabel.setText("Company Name");
-            machineIdModifyPartTextField.setText(((Outsourced) part).getCompanyName());
+            machineIdModifyPartTextField.setText(((Outsourced) part).getCompanyName()); // cast to temporarily get access to subclass methods
         }
     }
 
