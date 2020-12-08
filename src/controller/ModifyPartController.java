@@ -12,6 +12,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.InHouse;
+import model.Inventory;
 import model.Outsourced;
 import model.Part;
 
@@ -61,7 +62,7 @@ public class ModifyPartController implements Initializable {
 
     @FXML
     void modifyPartInHouseRButton(ActionEvent event) {
-
+        modifyPartMachineOrCompanyLabel.setText("Machine ID");
     }
 
     /**
@@ -80,29 +81,73 @@ public class ModifyPartController implements Initializable {
 
     @FXML
     void onActionModifyPartOutsourcedRButton(ActionEvent event) {
-
+        modifyPartMachineOrCompanyLabel.setText("Company Name");
     }
 
     @FXML
-    void onActionModifyPartSaveButton(ActionEvent event) {
+    void onActionModifyPartSaveButton(ActionEvent event) throws IOException {
+        Part oldPart = Inventory.lookupPart(Integer.parseInt(idModifyPartTextField.getText()));
+        int oldPartIndex = Inventory.getAllParts().indexOf(oldPart);
 
+        if (modifyPartInHouseRButton.isSelected()) {
+            System.out.println("Calling InHouse Inventory updatePart");
+            Inventory.updatePart(
+                    oldPartIndex,
+                    new InHouse(
+                            Integer.parseInt(idModifyPartTextField.getText()),
+                            nameModifyPartTextfield.getText(),
+                            Double.parseDouble(priceModifyPartTextField.getText()),
+                            Integer.parseInt(invModifyPartTextField.getText()),
+                            Integer.parseInt(minModifyPartTextField.getText()),
+                            Integer.parseInt(maxModifyPartTextField.getText()),
+                            Integer.parseInt(machineIdModifyPartTextField.getText())
+                    )
+            );
+        } else {
+            System.out.println("Calling Outsourced Inventory updatePart");
+            Inventory.updatePart(
+                    oldPartIndex,
+                    new Outsourced(
+                            Integer.parseInt(idModifyPartTextField.getText()),
+                            nameModifyPartTextfield.getText(),
+                            Double.parseDouble(priceModifyPartTextField.getText()),
+                            Integer.parseInt(invModifyPartTextField.getText()),
+                            Integer.parseInt(minModifyPartTextField.getText()),
+                            Integer.parseInt(maxModifyPartTextField.getText()),
+                            machineIdModifyPartTextField.getText()
+                    )
+            );
+        }
+
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
+    /**
+     * Populates the fields for whatever selected Part in MainController.
+     * Uses the instanceof operator to determine how to properly set up
+     * the radiobutton.
+     *
+     * @param part The selected Part to be modified.
+     */
     public void sendPart(Part part) {
         idModifyPartTextField.setText(String.valueOf(part.getId()));
         nameModifyPartTextfield.setText(part.getName());
         invModifyPartTextField.setText(String.valueOf(part.getStock()));
         priceModifyPartTextField.setText(String.valueOf(part.getPrice()));
         maxModifyPartTextField.setText(String.valueOf(part.getMax()));
-//        machineIdModifyPartTextField.setText(part.machineID);
         minModifyPartTextField.setText(String.valueOf(part.getMin()));
+
         if (part instanceof InHouse) {
             modifyPartInHouseRButton.setSelected(true);
             modifyPartOutsourcedRButton.setSelected(false);
             modifyPartMachineOrCompanyLabel.setText("Machine ID");
             machineIdModifyPartTextField.setText(String.valueOf(((InHouse) part).getMachineId()));
         }
-        if(part instanceof Outsourced) {
+
+        if (part instanceof Outsourced) {
             modifyPartOutsourcedRButton.setSelected(true);
             modifyPartInHouseRButton.setSelected(false);
             modifyPartMachineOrCompanyLabel.setText("Company Name");
