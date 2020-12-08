@@ -32,66 +32,100 @@ public class Inventory {
     }
 
     /**
-     * This method finds and returns a Part object.
-     * Using id, this method iterates through Inventory and returns the first match.
+     * This method returns the Part with a matching ID.
+     * The method iterates through Inventory.getAllParts and returns
+     * the first Part object with a matching ID.
      *
-     * @param partId The integer id of the Part object being requested.
-     * @return Returns a Part object, or null if not found.
+     * @param partId The ID for the Part object being searched for.
+     * @return Returns either the matching Part, or null if not found.
      */
     public static Part lookupPart(int partId) {
-        for (Part part : allParts) {
-            if (part.getId() == partId) {
-                return part;
-            }
+        for (int i = 0; i < Inventory.getAllParts().size(); i++) {
+            Part p = Inventory.getAllParts().get(i);
+
+            // Returns first match
+            if (p.getId() == partId)
+                return p;
         }
         return null;
     }
 
     /**
-     * This method finds and returns a Product object.
-     * Using id, this method iterates through Inventory and returns the first match.
+     * This method returns the Product with a matching ID.
+     * The method iterates through Inventory.getAllProducts and returns
+     * the first Product object with a matching ID.
      *
-     * @param productId The integer id of the Product object being requested.
-     * @return Returns a Product object, or null if not found.
+     * @param productId The ID for the Product object being searched for.
+     * @return Returns either the matching Product, or null if not found.
      */
     public static Product lookupProduct(int productId) {
-        for (Product product : allProducts) {
-            if (product.getId() == productId) {
-                return product;
-            }
+        for (int i = 0; i < Inventory.getAllProducts().size(); i++) {
+            Product p = Inventory.getAllProducts().get(i);
+
+            if (p.getId() == productId)
+                return p;
         }
         return null;
     }
 
     /**
-     * Overloaded method
-     * PLEASE REVIEW: I'm not sure what the purpose of this method is...
+     * This method filters searched items on a TableView with Part objects.
+     * This method is used to search a Part object by name and return matching items.
      *
-     * @param partName
-     * @return
+     * @param partName A String representing the name of a Part or ID.
+     * @return Returns all filtered Parts in an ObservableList<Part> if the
+     * filtered parts list is not empty. Returns original ObservableList<Part>
+     * if there are no filtered Parts.
      */
     public static ObservableList<Part> lookupPart(String partName) {
-        for (Part part : allParts) {
-            if (part.getName().contains(partName)) {
-                return allParts;
-            }
+        ObservableList<Part> allFilteredParts = FXCollections.observableArrayList();
+
+        // Searches for matching characters, then adds to list
+        for (Part p : Inventory.getAllParts()) {
+            if (p.getName().contains(partName))
+                allFilteredParts.add(p);
         }
-        return null;
+
+        // Searches for integers, then adds to list
+        try {
+            int idPart = Integer.parseInt(partName);
+            Part p = Inventory.lookupPart(idPart);
+            if (p != null)
+                allFilteredParts.add(p);
+        } catch (NumberFormatException e) {
+            // ignore exception
+        }
+
+        return allFilteredParts;
     }
 
     /**
-     * PLEASE REVIEW: I'm not sure what the purpose of this method is...
+     * This method filters searched items on a TableView with Product objects.
+     * This method is used to search a Product object by name and return matching items.
      *
-     * @param productName
-     * @return
+     * @param productName A String representing the name of a Product or ID.
+     * @return Returns all filtered Products in an ObservableList<Product> if the
+     * filtered products list is not empty. Returns original ObservableList<Product>
+     * if there are no filtered Products.
      */
     public static ObservableList<Product> lookupProduct(String productName) {
-        for (Product product : allProducts) {
-            if (product.getName().contains(productName)) {
-                return allProducts;
-            }
+        ObservableList<Product> allFilteredProducts = FXCollections.observableArrayList();
+
+        for (Product p : Inventory.getAllProducts()) {
+            if (p.getName().contains(productName))
+                allFilteredProducts.add(p);
         }
-        return null;
+
+        try {
+            int productId = Integer.parseInt(productName);
+            Product p = Inventory.lookupProduct(productId);
+            if (p != null)
+                allFilteredProducts.add(p);
+        } catch (NumberFormatException e) {
+            // ignore exception
+        }
+
+        return allFilteredProducts;
     }
 
     /**

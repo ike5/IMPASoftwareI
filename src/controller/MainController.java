@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -32,8 +29,6 @@ public class MainController implements Initializable {
     Parent scene; // Can have as many scenes as you want.
     public static int makePartId; // Provides a unique ID for parts among all packages.
     public static int makeProductId; // Provides a unique ID for products among all packages.
-//    private static ObservableList<Part> allFilteredParts = FXCollections.observableArrayList();
-//    private static ObservableList<Product> allFilteredProducts = FXCollections.observableArrayList();
 
     @FXML
     private TextField searchPartTextField; // Search box for Parts TableView
@@ -115,7 +110,7 @@ public class MainController implements Initializable {
     @FXML
     void onActionDeletePart(ActionEvent event) {
         Inventory.deletePart(partTableView.getSelectionModel().getSelectedItem()); // deletes Part object
-        partTableView.setItems(filterPart(searchPartTextField.getText())); // refresh filtered table
+        partTableView.setItems(Inventory.lookupPart(searchPartTextField.getText())); // refresh filtered table
     }
 
     /**
@@ -129,7 +124,7 @@ public class MainController implements Initializable {
     void onActionDeleteProduct(ActionEvent event) {
         System.out.println("Delete product button clicked!");
         Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
-        productTableView.setItems(filterProduct(searchProductTextField.getText())); // refresh filtered table
+        productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
     }
 
     /**
@@ -170,6 +165,11 @@ public class MainController implements Initializable {
             System.out.println("You need to select an item!");
             System.out.println("Exception: " + e);
             System.out.println("Exception: " + e.getMessage());
+
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You need to select an item!");
+            alert.setTitle("Error Dialog");
+            alert.showAndWait();
+
         } catch (IOException e) {
             System.out.println("Exception: " + e);
         }
@@ -202,12 +202,27 @@ public class MainController implements Initializable {
      */
     @FXML
     void onKeyTypedSearchPartIdOrName(KeyEvent event) {
-        partTableView.setItems(filterPart(searchPartTextField.getText()));
+        ObservableList<Part> oList = Inventory.lookupPart(searchPartTextField.getText());
+        partTableView.setItems(oList);
+
+        // Highlight if only a single row is filtered
+        if (oList.size() == 1) {
+            partTableView.getSelectionModel().select(oList.get(0));
+        } else {
+            partTableView.getSelectionModel().clearSelection();
+        }
     }
 
     @FXML
     void onKeyTypedSearchProductIdOrName(KeyEvent event) {
-        productTableView.setItems(filterProduct(searchProductTextField.getText()));
+        ObservableList<Product> oList = Inventory.lookupProduct(searchProductTextField.getText());
+        productTableView.setItems(oList);
+
+        if (oList.size() == 1) {
+            productTableView.getSelectionModel().select(oList.get(0));
+        } else {
+            productTableView.getSelectionModel().clearSelection();
+        }
     }
 
     /**
@@ -226,60 +241,6 @@ public class MainController implements Initializable {
         return false;
     }
 
-
-    /**
-     * This method filters searched items on a TableView with Part objects.
-     * This method is used to search a Part object by name and return matching items.
-     *
-     * @param name A String representing the name of a Part or ID.
-     * @return Returns all filtered Parts in an ObservableList<Part> if the
-     * filtered parts list is not empty. Returns original ObservableList<Part>
-     * if there are no filtered Parts.
-     */
-    public ObservableList<Part> filterPart(String name) {
-        ObservableList<Part> allFilteredParts = FXCollections.observableArrayList();
-
-        for (Part p : Inventory.getAllParts()) {
-            if (p.getName().contains(name))
-                allFilteredParts.add(p);
-        }
-
-        if (allFilteredParts.size() == 1) {
-            partTableView.getSelectionModel().select(allFilteredParts.get(0));
-        } else {
-            partTableView.getSelectionModel().clearSelection();
-        }
-
-        return allFilteredParts;
-    }
-
-    /**
-     * This method filters searched items on a TableView with Product objects.
-     * This method is used to search a Product object by name and return matching items.
-     *
-     * @param name A String representing the name of a Product or ID.
-     * @return Returns all filtered Products in an ObservableList<Product> if the
-     * filtered products list is not empty. Returns original ObservableList<Product>
-     * if there are no filtered Products.
-     */
-    public ObservableList<Product> filterProduct(String name) {
-        ObservableList<Product> allFilteredProducts = FXCollections.observableArrayList();
-
-        for (Product p : Inventory.getAllProducts()) {
-            if (p.getName().contains(name))
-                allFilteredProducts.add(p);
-
-        }
-
-        if (allFilteredProducts.size() == 1) {
-            productTableView.getSelectionModel().select(allFilteredProducts.get(0));
-        } else {
-            productTableView.getSelectionModel().clearSelection();
-        }
-
-        return allFilteredProducts;
-    }
-
     /**
      * This method searches Inventory by Product ID.
      * The method lets user know if a Product exists.
@@ -295,28 +256,6 @@ public class MainController implements Initializable {
         }
         return false;
     }
-
-//    /**
-//     * This method returns any filtered parts.
-//     * Items can be added to and removed via this method by obtaining
-//     * the ObservableList for the parts filtered.
-//     *
-//     * @return Returns an ObservableList with any items added to filtered parts.
-//     */
-//    public static ObservableList<Part> getAllFilteredParts() {
-//        return allFilteredParts;
-//    }
-
-//    /**
-//     * This method returns any filtered products.
-//     * Items can be added to and removed via this method by obtaining
-//     * the ObservableList for the products filtered.
-//     *
-//     * @return Returns an ObservableList with any items added to filtered products.
-//     */
-//    public static ObservableList<Product> getAllFilteredProducts() {
-//        return allFilteredProducts;
-//    }
 
     /**
      * This method initializes upon staging of window.
