@@ -111,6 +111,9 @@ public class MainController implements Initializable {
     @FXML
     void onActionDeletePart(ActionEvent event) {
         try{
+            // trigger exception of no part selected
+            Inventory.lookupPart(partTableView.getSelectionModel().getSelectedItem().getId());
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete part?");
             Optional<ButtonType> result = alert.showAndWait();
 
@@ -135,6 +138,9 @@ public class MainController implements Initializable {
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
         try{
+            // trigger exception if no product selected
+            Inventory.lookupProduct(productTableView.getSelectionModel().getSelectedItem().getId());
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete product?");
             Optional<ButtonType> result = alert.showAndWait();
 
@@ -186,7 +192,7 @@ public class MainController implements Initializable {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             scene = loader.getRoot();
             stage.setScene(new Scene(scene));
-            stage.show(); // use showAndWait() if you have multiple windows such as a dialog box
+            stage.show();
         } catch (NullPointerException e) {
             System.out.println("Exception: " + e.getMessage());
 
@@ -225,9 +231,8 @@ public class MainController implements Initializable {
         } catch (NullPointerException e) {
             System.out.println("Exception: " + e.getMessage());
 
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an item.");
             alert.setTitle("Error Dialog");
-            alert.setContentText("YOu need to select an item!");
             alert.showAndWait();
         } catch (IOException e) {
             System.out.println("Exception " + e);

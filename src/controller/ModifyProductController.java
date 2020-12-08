@@ -1,5 +1,8 @@
 package controller;
 
+import javafx.beans.property.Property;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.Part;
@@ -20,6 +24,7 @@ import java.util.ResourceBundle;
 public class ModifyProductController implements Initializable {
     Stage stage;
     Parent scene;
+    ObservableList<Part> assParts = FXCollections.observableArrayList();
 
     @FXML
     private TextField idModifyProductTextField;
@@ -57,9 +62,6 @@ public class ModifyProductController implements Initializable {
     @FXML
     private TableColumn<Part, Double> modifyProductPriceColumn;
 
-//    @FXML
-//    private Button modifyProductAddButton;
-
     @FXML
     private TableView<Part> modifyProductTableView2;
 
@@ -75,18 +77,10 @@ public class ModifyProductController implements Initializable {
     @FXML
     private TableColumn<Part, Double> modifyProductPriceCol;
 
-//    @FXML
-//    private Button modifyProductRemoveAssButton;
-//
-//    @FXML
-//    private Button modifyProductSaveButton;
-//
-//    @FXML
-//    private Button modifyProductCancelButton;
-
     @FXML
     void onActionModifyProductAdd(ActionEvent event) {
-
+        assParts.add(modifyProductTableView1.getSelectionModel().getSelectedItem());
+        modifyProductTableView2.setItems(assParts);
     }
 
     /**
@@ -109,7 +103,7 @@ public class ModifyProductController implements Initializable {
     }
 
     @FXML
-    void onActionModifyProductRemoveAss(ActionEvent event) {
+    void onActionModifyProductRemoveAssociation(ActionEvent event) {
 
     }
 
@@ -117,9 +111,10 @@ public class ModifyProductController implements Initializable {
     void onActionModifyProductSave(ActionEvent event) {
         Product oldProduct = Inventory.lookupProduct(Integer.parseInt(idModifyProductTextField.getText()));
         int oldProductIndex = Inventory.getAllProducts().indexOf(oldProduct);
+        Product newProduct;
 
         try{
-            Inventory.updateProduct(oldProductIndex, new Product(
+            Inventory.updateProduct(oldProductIndex, newProduct = new Product(
                             Integer.parseInt(idModifyProductTextField.getText()),
                             nameModifyProductTextField.getText(),
                             Double.parseDouble(priceModifyProductTextField.getText()),
@@ -129,14 +124,18 @@ public class ModifyProductController implements Initializable {
                     )
             );
 
+            for(Part p : assParts){
+                newProduct.addAssociatedPart(p);
+            }
+
+
             stage = (Stage)((Button)event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
         } catch (NumberFormatException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Needs to be a number");
             alert.setTitle("Error Dialog");
-            alert.setContentText("Number needs to be an integer!");
             alert.showAndWait();
         } catch (IOException e){
             System.out.println("Exception: " + e.getMessage());
@@ -153,10 +152,25 @@ public class ModifyProductController implements Initializable {
         priceModifyProductTextField.setText(String.valueOf(product.getPrice()));
         maxModifyProductTextField.setText(String.valueOf(product.getMax()));
         minModifyProductTextField.setText(String.valueOf(product.getMin()));
+        for (Part p : product.getAllAssociatedParts()){
+            assParts.add(p);
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        modifyProductTableView1.setItems(Inventory.getAllParts());
 
+        modifyProductPartIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        modifyProductPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        modifyProductInvLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        modifyProductPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        modifyProductTableView2.setItems(assParts);
+
+        modifyProductPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        modifyProductPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        modifyProductInvLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        modifyProductPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 }

@@ -106,7 +106,7 @@
                             <children>
                                 <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="169.0" spacing="10.0">
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#onActionModifyProductRemoveAss" prefHeight="25.0" prefWidth="129.0" text="Remove Associated Part" />
+                                        <Button mnemonicParsing="false" onAction="#onActionModifyProductRemoveAssociation" prefHeight="25.0" prefWidth="129.0" text="Remove Associated Part" />
                                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="37.0">
                                             <children>
                                                 <Button mnemonicParsing="false" onAction="#onActionModifyProductSave" text="Save" />
