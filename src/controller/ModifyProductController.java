@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +23,7 @@ import java.util.ResourceBundle;
 public class ModifyProductController implements Initializable {
     Stage stage;
     Parent scene;
-    ObservableList<Part> assParts = FXCollections.observableArrayList();
+    ObservableList<Part> linkedParts = FXCollections.observableArrayList();
 
     @FXML
     private TextField idModifyProductTextField;
@@ -79,8 +78,8 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void onActionModifyProductAdd(ActionEvent event) {
-        assParts.add(modifyProductTableView1.getSelectionModel().getSelectedItem());
-        modifyProductTableView2.setItems(assParts);
+        linkedParts.add(modifyProductTableView1.getSelectionModel().getSelectedItem());
+        modifyProductTableView2.setItems(linkedParts);
     }
 
     /**
@@ -104,8 +103,10 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void onActionModifyProductRemoveAssociation(ActionEvent event) {
-
+        linkedParts.remove(modifyProductTableView2.getSelectionModel().getSelectedItem());
+        modifyProductTableView2.setItems(linkedParts);
     }
+
 
     @FXML
     void onActionModifyProductSave(ActionEvent event) {
@@ -124,7 +125,7 @@ public class ModifyProductController implements Initializable {
                     )
             );
 
-            for(Part p : assParts){
+            for(Part p : linkedParts){
                 newProduct.addAssociatedPart(p);
             }
 
@@ -153,7 +154,7 @@ public class ModifyProductController implements Initializable {
         maxModifyProductTextField.setText(String.valueOf(product.getMax()));
         minModifyProductTextField.setText(String.valueOf(product.getMin()));
         for (Part p : product.getAllAssociatedParts()){
-            assParts.add(p);
+            linkedParts.add(p);
         }
     }
 
@@ -166,7 +167,7 @@ public class ModifyProductController implements Initializable {
         modifyProductInvLevelCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         modifyProductPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        modifyProductTableView2.setItems(assParts);
+        modifyProductTableView2.setItems(linkedParts);
 
         modifyProductPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         modifyProductPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
