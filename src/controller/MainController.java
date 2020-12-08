@@ -19,6 +19,7 @@ import model.Product;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -109,8 +110,19 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionDeletePart(ActionEvent event) {
-        Inventory.deletePart(partTableView.getSelectionModel().getSelectedItem()); // deletes Part object
-        partTableView.setItems(Inventory.lookupPart(searchPartTextField.getText())); // refresh filtered table
+        try{
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete part?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Inventory.deletePart(partTableView.getSelectionModel().getSelectedItem()); // deletes Part object
+                partTableView.setItems(Inventory.lookupPart(searchPartTextField.getText())); // refresh filtered table
+            }
+        }catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
+            alert.setTitle("Error Dialog");
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -122,9 +134,19 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
-        System.out.println("Delete product button clicked!");
-        Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
-        productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
+        try{
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete product?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
+                productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
+            }
+        } catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
+            alert.setTitle("Error Dialog");
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -135,7 +157,11 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionExit(ActionEvent event) {
-        System.exit(0); // Closes application
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Exit application?");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK)
+            System.exit(0); // Closes application
     }
 
     /**
@@ -189,17 +215,11 @@ public class MainController implements Initializable {
 
             // use getController() to get access to an instance of ModifyProductController
             ModifyProductController MProductController = loader.getController();
-
-            // WORK HERE:
-            // NOTICE THAT ABOVE NEEDS A sendProduct() METHOD, BUT IN ORDER TO IMPLEMENT THIS METHOD
-            // THE MODIFY PRODUCT CONTROLLER NEEDS TO BE ESTABLISHED WITH THIS METHOD. THE
-            // MODIFY PRODUCT CONTROLLER IS DIFFERENT IN SOME WAYS THAN THE MODIFY PART
-            // CONTROLLER, SO IT CAN'T SIMPLY BE COPY AND PASTED--ALTHOUGH SOME CAN.
+            MProductController.sendProduct(productTableView.getSelectionModel().getSelectedItem());
 
             // Get event source from button
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            // Load resources from view directory
-            scene = FXMLLoader.load(getClass().getResource("/view/ModifyProduct.fxml"));
+            scene = loader.getRoot();
             stage.setScene(new Scene(scene));
             stage.show();
         } catch (NullPointerException e) {

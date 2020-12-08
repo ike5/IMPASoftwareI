@@ -69,7 +69,7 @@ public class AddPartController implements Initializable {
      */
     @FXML
     void onActionCancelPart(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "All text fields will be cleared, \ndo you want to continue?");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?\nAll changes will be lost!");
         Optional<ButtonType> result = alert.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK){
