@@ -146,7 +146,7 @@ public class MainController implements Initializable {
      * @throws IOException
      */
     @FXML
-    void onActionModifyPart(ActionEvent event) throws IOException {
+    void onActionModifyPart(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/ModifyPart.fxml"));
@@ -162,14 +162,11 @@ public class MainController implements Initializable {
             stage.setScene(new Scene(scene));
             stage.show(); // use showAndWait() if you have multiple windows such as a dialog box
         } catch (NullPointerException e) {
-            System.out.println("You need to select an item!");
-            System.out.println("Exception: " + e);
             System.out.println("Exception: " + e.getMessage());
 
             Alert alert = new Alert(Alert.AlertType.ERROR, "You need to select an item!");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
-
         } catch (IOException e) {
             System.out.println("Exception: " + e);
         }
@@ -184,13 +181,38 @@ public class MainController implements Initializable {
      * @throws IOException
      */
     @FXML
-    void onActionModifyProduct(ActionEvent event) throws IOException {
-        // Get event source from button
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        // Load resources from view directory
-        scene = FXMLLoader.load(getClass().getResource("/view/ModifyProduct.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+    void onActionModifyProduct(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/ModifyProduct.fxml"));
+            loader.load();
+
+            // use getController() to get access to an instance of ModifyProductController
+            ModifyProductController MProductController = loader.getController();
+
+            // WORK HERE:
+            // NOTICE THAT ABOVE NEEDS A sendProduct() METHOD, BUT IN ORDER TO IMPLEMENT THIS METHOD
+            // THE MODIFY PRODUCT CONTROLLER NEEDS TO BE ESTABLISHED WITH THIS METHOD. THE
+            // MODIFY PRODUCT CONTROLLER IS DIFFERENT IN SOME WAYS THAN THE MODIFY PART
+            // CONTROLLER, SO IT CAN'T SIMPLY BE COPY AND PASTED--ALTHOUGH SOME CAN.
+
+            // Get event source from button
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            // Load resources from view directory
+            scene = FXMLLoader.load(getClass().getResource("/view/ModifyProduct.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch (NullPointerException e) {
+            System.out.println("Exception: " + e.getMessage());
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("YOu need to select an item!");
+            alert.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Exception " + e);
+        }
+
     }
 
     /**
