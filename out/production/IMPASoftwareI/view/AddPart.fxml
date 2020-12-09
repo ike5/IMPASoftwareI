@@ -25,11 +25,11 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="inHousePartRadioButton" mnemonicParsing="false" onAction="#onActionInhousePartRadio" selected="true" text="In-House">
+                  <RadioButton fx:id="inHousePartRadioButton" mnemonicParsing="false" onAction="#onActionInHousePartRadio" selected="true" text="In-House">
                      <toggleGroup>
                         <ToggleGroup fx:id="sourceToggleGroup" />
                      </toggleGroup></RadioButton>
-                  <RadioButton fx:id="outsourcedPartRadioButton" layoutX="31.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionOursourcedPartRadio" text="Outsourced" toggleGroup="$sourceToggleGroup" />
+                  <RadioButton fx:id="outsourcedPartRadioButton" layoutX="31.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionOutsourcedPartRadio" text="Outsourced" toggleGroup="$sourceToggleGroup" />
                </children>
                <padding>
                   <Insets left="50.0" right="50.0" />
@@ -78,8 +78,13 @@
                   <TextField fx:id="minPartTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                </children>
             </GridPane>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="500.0" spacing="10.0">
                <children>
+                  <Label fx:id="errorLabel" prefWidth="250.0" textFill="#ee0707">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
                   <Button mnemonicParsing="false" onAction="#onActionSavePart" text="Save" />
                   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionCancelPart" text="Cancel" />
                </children>

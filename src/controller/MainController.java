@@ -111,12 +111,14 @@ public class MainController implements Initializable {
     @FXML
     void onActionDeletePart(ActionEvent event) {
         try{
-            // trigger exception of no part selected
+            // Trigger exception of no part selected
             Inventory.lookupPart(partTableView.getSelectionModel().getSelectedItem().getId());
 
+            // Confirm with user to delete part
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete part?");
             Optional<ButtonType> result = alert.showAndWait();
 
+            // Checks whether OK button pressed then deletes part
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 Inventory.deletePart(partTableView.getSelectionModel().getSelectedItem()); // deletes Part object
                 partTableView.setItems(Inventory.lookupPart(searchPartTextField.getText())); // refresh filtered table
@@ -138,12 +140,14 @@ public class MainController implements Initializable {
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
         try{
-            // trigger exception if no product selected
+            // Trigger exception if no product selected
             Inventory.lookupProduct(productTableView.getSelectionModel().getSelectedItem().getId());
 
+            // Confirm with user to delete part
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete product?");
             Optional<ButtonType> result = alert.showAndWait();
 
+            // Checks wither OK button pressed then deletes product
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
                 productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
