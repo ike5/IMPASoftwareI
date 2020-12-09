@@ -95,69 +95,166 @@ public class AddPartController implements Initializable {
     }
 
     @FXML
-    void onActionSavePart(ActionEvent event) {
-        int inv = 0;
-        int max = 0;
-        int min = 0;
-        double price = 0;
-        String name = null;
+    void onActionSavePart(ActionEvent event) throws IOException {
+         /*
+        Only once validation passes will InHouse or Outsourced object
+        be created, and stage will move to MainController.
+         */
+        if (validate(
+                namePartTextField,
+                invPartTextField,
+                pricePartTextField,
+                maxPartTextField,
+                minPartTextField,
+                companyOrMachineIdPartTextField,
+                inHousePartRadioButton,
+                outsourcedPartRadioButton,
+                errorLabel)) {
+
+            /*
+            Check to see whether InHouse or Outsourced radio button is
+            selected, then create the corresponding InHouse/Outsourced
+            Part object.
+             */
+            if (inHousePartRadioButton.isSelected()) {
+                Inventory.addPart(new InHouse(
+                        ++MainController.makePartId,
+                        namePartTextField.getText(),
+                        Double.parseDouble(pricePartTextField.getText()),
+                        Integer.parseInt(invPartTextField.getText()),
+                        Integer.parseInt(minPartTextField.getText()),
+                        Integer.parseInt(maxPartTextField.getText()),
+                        Integer.parseInt(companyOrMachineIdPartTextField.getText()))
+                );
+            } else {
+                Inventory.addPart(new Outsourced(
+                        ++MainController.makePartId,
+                        namePartTextField.getText(),
+                        Double.parseDouble(pricePartTextField.getText()),
+                        Integer.parseInt(invPartTextField.getText()),
+                        Integer.parseInt(minPartTextField.getText()),
+                        Integer.parseInt(maxPartTextField.getText()),
+                        companyOrMachineIdPartTextField.getText())
+                );
+            }
+
+            // Set stage
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        labelPartCompanyOrMachineID.setText("Machine ID"); // Sets default label
+    }
+
+//    /**
+//     * This method tests a String to see if it only contains digits.
+//     *
+//     * @param str The string being tested.
+//     * @return Returns true if only digits, returns false if contains
+//     * other characters or is null or is of length 0.
+//     */
+//    public static boolean isNumeric(final String str) {
+//        if (str == null || str.length() == 0) {
+//            return false;
+//        }
+//        return str.chars().allMatch(Character::isDigit); // (Character c) -> c.isDigit()
+//    }
+
+    /**
+     * This method validates input and sets any error labels.
+     * The method takes in various TextFields, RadioButtons, and
+     * a Label, and returns a boolean value if all fields are
+     * validated to their respective types.
+     *
+     * @param name               The Name TextField.
+     * @param stock              The Inv TextField.
+     * @param price              The Price TextField.
+     * @param max                The Max TextField.
+     * @param min                The Min TextField.
+     * @param machineIdOrCompany The companyOrMachineId TextField.
+     * @param inHouse            The inHouse RadioButton.
+     * @param outsourced         The outsourced RadioButton.
+     * @param errorLabel         The errorLabel Label.
+     * @return Returns true if all fields validate, and false if
+     * any fields does not correspond to its type.
+     */
+    public static boolean validate(
+            TextField name,
+            TextField stock,
+            TextField price,
+            TextField max,
+            TextField min,
+            TextField machineIdOrCompany,
+            RadioButton inHouse,
+            RadioButton outsourced,
+            Label errorLabel) {
+        int vInv = 0;
+        int vMax = 0;
+        int vMin = 0;
+        double vPrice = 0;
+        String vName = null;
         String companyNameOrMachineId = null;
-        boolean clearToSave = true;
         String regexInt = "^\\d+";
         String regexDouble = "^\\d+(\\.\\d+)?";
         String regexWord = "^\\w+";
         StringBuilder errorMessages = new StringBuilder();
-
+        boolean clearToSave = true;
 
         try {
             int id = ++MainController.makePartId; // no check needed
 
-            if (!(namePartTextField.getText().matches(regexWord))) {
+            if (!(name.getText().matches(regexWord))) {
                 clearToSave = false;
                 errorMessages.append("Name: enter a valid name\n");
                 System.out.println("name called");
             } else {
-                name = namePartTextField.getText();
+                vName = name.getText();
             }
 
-            if (!(invPartTextField.getText().matches(regexInt))) {
+            if (!(stock.getText().matches(regexInt))) {
                 clearToSave = false;
                 errorMessages.append("Inventory: enter a valid integer\n");
                 System.out.println("inv called");
             } else {
-                inv = Integer.parseInt(invPartTextField.getText());
+                vInv = Integer.parseInt(stock.getText());
             }
 
-            if (!(pricePartTextField.getText().matches(regexDouble))) {
+            if (!(price.getText().matches(regexDouble))) {
                 clearToSave = false;
                 errorMessages.append("Price: enter a valid double\n");
                 System.out.println("price called");
             } else {
-                price = Double.parseDouble(pricePartTextField.getText());
+                vPrice = Double.parseDouble(price.getText());
             }
 
-            if (!(maxPartTextField.getText().matches(regexInt))) {
+            if (!(max.getText().matches(regexInt))) {
                 clearToSave = false;
                 errorMessages.append("Max: enter a valid integer\n");
                 System.out.println("max called");
             } else {
-                max = Integer.parseInt(maxPartTextField.getText());
+                vMax = Integer.parseInt(max.getText());
             }
 
-            if (!(minPartTextField.getText().matches(regexInt))) {
+            if (!(min.getText().matches(regexInt))) {
                 clearToSave = false;
                 errorMessages.append("Min: enter a valid integer\n");
                 System.out.println("Min called");
             } else {
-                min = Integer.parseInt(minPartTextField.getText());
+                vMin = Integer.parseInt(min.getText());
             }
 
             /*
              if InHouse radio button is selected and Machine ID is not
              an integer raise an error.
              */
-            if (inHousePartRadioButton.isSelected()
-                    && !(companyOrMachineIdPartTextField.getText().matches(regexInt))) {
+            if (inHouse.isSelected()
+                    && !(machineIdOrCompany.getText().matches(regexInt))) {
                 clearToSave = false;
                 errorMessages.append("Machine ID: enter a valid integer\n");
                 System.out.println("machine called");
@@ -166,14 +263,14 @@ public class AddPartController implements Initializable {
                 If Outsourced radio button is selected and Company name is
                 empty raise an error.
                  */
-            } else if (outsourcedPartRadioButton.isSelected()
-                    && companyOrMachineIdPartTextField.getText().matches("")) {
+            } else if (outsourced.isSelected()
+                    && machineIdOrCompany.getText().matches("")) {
 
                 clearToSave = false;
                 errorMessages.append("Company Name: enter a valid string\n");
                 System.out.println("company called");
             } else {
-                companyNameOrMachineId = companyOrMachineIdPartTextField.getText();
+                companyNameOrMachineId = machineIdOrCompany.getText();
             }
 
             // REMOVE BEFORE PUBLISHING
@@ -183,62 +280,13 @@ public class AddPartController implements Initializable {
             // Sets text of the error label
             errorLabel.setText(String.valueOf(errorMessages));
 
-            /*
-            Only once validation above passes will InHouse or Outsourced object
-            be created, and stage will move to MainController.
-             */
-            if (clearToSave) {
 
-                /*
-                Check to see whether InHouse or Outsourced radio button is
-                selected, then create the corresponding InHouse/Outsourced
-                Part object.
-                 */
-                if (inHousePartRadioButton.isSelected()) {
-                    Inventory.addPart(new InHouse(
-                            id,
-                            name,
-                            price,
-                            inv,
-                            min,
-                            max,
-                            Integer.parseInt(companyNameOrMachineId))
-                    );
-                } else {
-                    Inventory.addPart(new Outsourced(id, name, price, inv, min, max, companyNameOrMachineId));
-                }
-
-                // Set Stage
-                stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-                stage.setScene(new Scene(scene));
-                stage.show();
-            }
         } catch (Exception e) { // catch any unusual errors
             System.out.println("Exception: " + e);
             Alert alert = new Alert(Alert.AlertType.ERROR, "Something went wrong!");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        labelPartCompanyOrMachineID.setText("Machine ID"); // Sets default label
-    }
-
-
-    /**
-     * This method tests a String to see if it only contains digits.
-     *
-     * @param str The string being tested.
-     * @return Returns true if only digits, returns false if contains
-     * other characters or is null or is of length 0.
-     */
-    public static boolean isNumeric(final String str) {
-        if (str == null || str.length() == 0) {
-            return false;
-        }
-        return str.chars().allMatch(Character::isDigit); // (Character c) -> c.isDigit()
+        return clearToSave;
     }
 }
