@@ -1,5 +1,6 @@
 package controller;
 
+import defaultpackage.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -92,7 +93,7 @@ public class ModifyPartController implements Initializable {
         Part oldPart = Inventory.lookupPart(Integer.parseInt(idModifyPartTextField.getText()));
         int oldPartIndex = Inventory.getAllParts().indexOf(oldPart);
 
-        if (AddPartController.validate(
+        if (Main.validate(
                 nameModifyPartTextField,
                 invModifyPartTextField,
                 priceModifyPartTextField,
