@@ -19,6 +19,7 @@ import model.Product;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -282,38 +283,6 @@ public class MainController implements Initializable {
         }
     }
 
-//    /**
-//     * This method is used to see whether a Part object exists in Inventory.
-//     * The method iterates through Inventory and stops when a match is found.
-//     *
-//     * @param id The id of a Part object.
-//     * @return Returns true if a Part object is in Inventory, and false if not found.
-//     */
-//    public boolean searchPart(int id) {
-//        // search method will set the id
-//        for (Part part : Inventory.getAllParts()) {
-//            if (part.getId() == id)
-//                return true;
-//        }
-//        return false;
-//    }
-
-//    /**
-//     * This method searches Inventory by Product ID.
-//     * The method lets user know if a Product exists.
-//     *
-//     * @param id The Product ID being searched for.
-//     * @return Returns true if the Product ID matches one in Inventory,
-//     * and returns false if no match is found.
-//     */
-//    public boolean searchProduct(int id) {
-//        for (Product product : Inventory.getAllProducts()) {
-//            if (product.getId() == id)
-//                return true;
-//        }
-//        return false;
-//    }
-
     /**
      * This method initializes upon staging of window.
      * The method sets up the TableView and provides a way to link the columns to their
@@ -339,6 +308,12 @@ public class MainController implements Initializable {
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPricePerUnitColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+
+//        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+//        partPricePerUnitColumn.setCellFactory(partDoubleTableColumn -> {
+//
+//        });
     }
 }
 

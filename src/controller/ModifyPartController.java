@@ -73,7 +73,7 @@ public class ModifyPartController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Exit and discard changes?");
         Optional<ButtonType> result = alert.showAndWait();
 
-        if(result.isPresent() && result.get() == ButtonType.OK){
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             stage.setScene(new Scene(scene));
@@ -151,7 +151,7 @@ public class ModifyPartController implements Initializable {
         idModifyPartTextField.setText(String.valueOf(part.getId()));
         nameModifyPartTextField.setText(part.getName());
         invModifyPartTextField.setText(String.valueOf(part.getStock()));
-        priceModifyPartTextField.setText(String.valueOf(part.getPrice()));
+        priceModifyPartTextField.setText(String.format("%,.2f", part.getPrice()));
         maxModifyPartTextField.setText(String.valueOf(part.getMax()));
         minModifyPartTextField.setText(String.valueOf(part.getMin()));
 
