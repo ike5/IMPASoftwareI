@@ -65,7 +65,7 @@ public class AddPartController implements Initializable {
      */
     @FXML
     void onActionCancelPart(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?\nAll changes will be lost!");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit and\ndiscard changes?");
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {

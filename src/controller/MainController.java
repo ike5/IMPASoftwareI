@@ -85,20 +85,37 @@ public class MainController implements Initializable {
     }
 
     /**
-     * The Add button opens the AddProduct stage.
-     * The button responds to click events to load and display the AddProduct stage.
+     * The Modify button opens the ModifyPart stage.
+     * The button responds to click events to load and display the ModifyPart stage.
      *
-     * @param event The event object generated after clicking the Add button.
+     * @param event The event object generated after clicking the Modify button.
      * @throws IOException
      */
     @FXML
-    void onActionAddProduct(ActionEvent event) throws IOException {
-        // Get event source from button
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        // Load resources from view directory
-        scene = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+    void onActionModifyPart(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/ModifyPart.fxml"));
+            loader.load();
+
+            // use getController() to get access to an instance of ModifyPartController
+            ModifyPartController MPartController = loader.getController();
+            MPartController.sendPart(partTableView.getSelectionModel().getSelectedItem());
+
+            // Get event source from button
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch (NullPointerException e) {
+            System.out.println("Exception: " + e.getMessage());
+
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You need to select an item!");
+            alert.setTitle("Error Dialog");
+            alert.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Exception: " + e);
+        }
     }
 
     /**
@@ -128,6 +145,58 @@ public class MainController implements Initializable {
             alert.setTitle("Error Dialog");
             alert.showAndWait();
         }
+    }
+
+    /**
+     * The Add button opens the AddProduct stage.
+     * The button responds to click events to load and display the AddProduct stage.
+     *
+     * @param event The event object generated after clicking the Add button.
+     * @throws IOException
+     */
+    @FXML
+    void onActionAddProduct(ActionEvent event) throws IOException {
+        // Get event source from button
+        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        // Load resources from view directory
+        scene = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+
+    /**
+     * The Modify button opens the ModifyProduct stage.
+     * The button responds to click events to load and display the ModifyProduct stage.
+     *
+     * @param event The event object generated after clicking the Modify button.
+     * @throws IOException
+     */
+    @FXML
+    void onActionModifyProduct(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/ModifyProduct.fxml"));
+            loader.load();
+
+            // use getController() to get access to an instance of ModifyProductController
+            ModifyProductController MProductController = loader.getController();
+            MProductController.sendProduct(productTableView.getSelectionModel().getSelectedItem());
+
+            // Get event source from button
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        } catch (NullPointerException e) {
+            System.out.println("Exception: " + e.getMessage());
+
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an item.");
+            alert.setTitle("Error Dialog");
+            alert.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Exception " + e);
+        }
+
     }
 
     /**
@@ -175,77 +244,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * The Modify button opens the ModifyPart stage.
-     * The button responds to click events to load and display the ModifyPart stage.
-     *
-     * @param event The event object generated after clicking the Modify button.
-     * @throws IOException
-     */
-    @FXML
-    void onActionModifyPart(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/ModifyPart.fxml"));
-            loader.load();
-
-            // use getController() to get access to an instance of ModifyPartController
-            ModifyPartController MPartController = loader.getController();
-            MPartController.sendPart(partTableView.getSelectionModel().getSelectedItem());
-
-            // Get event source from button
-            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            scene = loader.getRoot();
-            stage.setScene(new Scene(scene));
-            stage.show();
-        } catch (NullPointerException e) {
-            System.out.println("Exception: " + e.getMessage());
-
-            Alert alert = new Alert(Alert.AlertType.ERROR, "You need to select an item!");
-            alert.setTitle("Error Dialog");
-            alert.showAndWait();
-        } catch (IOException e) {
-            System.out.println("Exception: " + e);
-        }
-
-    }
-
-    /**
-     * The Modify button opens the ModifyProduct stage.
-     * The button responds to click events to load and display the ModifyProduct stage.
-     *
-     * @param event The event object generated after clicking the Modify button.
-     * @throws IOException
-     */
-    @FXML
-    void onActionModifyProduct(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/ModifyProduct.fxml"));
-            loader.load();
-
-            // use getController() to get access to an instance of ModifyProductController
-            ModifyProductController MProductController = loader.getController();
-            MProductController.sendProduct(productTableView.getSelectionModel().getSelectedItem());
-
-            // Get event source from button
-            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            scene = loader.getRoot();
-            stage.setScene(new Scene(scene));
-            stage.show();
-        } catch (NullPointerException e) {
-            System.out.println("Exception: " + e.getMessage());
-
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an item.");
-            alert.setTitle("Error Dialog");
-            alert.showAndWait();
-        } catch (IOException e) {
-            System.out.println("Exception " + e);
-        }
-
-    }
-
-    /**
-     * This method responds upon key entry in the search field.
+     * This method responds upon key entry in the Part search field.
      * The method updates the Part TableView with filtered Part objects
      * as a result of the search text.
      *
@@ -264,6 +263,13 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * This method responds upon key entry in the Product search field.
+     * The method updates the Product TableView with filtered Product objects
+     * as a result of the search text.
+     *
+     * @param event The event object generated after text is entered in the search field.
+     */
     @FXML
     void onKeyTypedSearchProductIdOrName(KeyEvent event) {
         ObservableList<Product> oList = Inventory.lookupProduct(searchProductTextField.getText());
