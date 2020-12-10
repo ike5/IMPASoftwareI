@@ -77,6 +77,9 @@ public class Main extends Application {
     }
 
     /**
+     * Logic: was having trouble making sure that this method did not
+     * conflict with
+     *
      * This method validates input and sets any error labels.
      * The method takes in various TextFields, RadioButtons, and
      * a Label, and returns a boolean value if all fields are
@@ -123,7 +126,7 @@ public class Main extends Application {
 
             if (!(stock.getText().matches(regexInt))) {
                 clearToSave = false;
-                errorMessages.append("Inventory: enter a valid integer\n");
+                errorMessages.append("Inv: enter a valid integer\n");
             } else {
                 vInv = Integer.parseInt(stock.getText());
             }
@@ -152,45 +155,80 @@ public class Main extends Application {
             // Max logic checking
             if (vMax < 0) {
                 clearToSave = false;
-                errorMessages.append("Max: value must be greater than 0\n");
+                errorMessages.append("Max: must be greater than 0\n");
             } else if (vMax < vMin) {
                 clearToSave = false;
-                errorMessages.append("Max: value must be greater than or equal to Min\n");
+                errorMessages.append("Max: must be greater than or equal to Min\n");
             }
 
             // Min logic checking
             if (vMin < 0) {
                 clearToSave = false;
-                errorMessages.append("Min: value must be greater than 0\n");
+                errorMessages.append("Min: must be greater than 0\n");
             } else if (vMin > vMax) {
                 clearToSave = false;
-                errorMessages.append("Min: value must be less than or equal to Max\n");
+                errorMessages.append("Min: must be less than or equal to Max\n");
             }
 
             // Inventory logic checking
             if (vInv > vMax || vInv < vMin) {
                 clearToSave = false;
-                errorMessages.append("Inv: value must be between Max and Min\n");
+                errorMessages.append("Inv: must be between Max and Min\n");
             } else if (vInv < 0) {
                 clearToSave = false;
-                errorMessages.append("Inv: value must be greater than or equal to 0\n");
+                errorMessages.append("Inv: must be greater than or equal to 0\n");
             }
 
             // Price logic checking
             if (vPrice < 0) {
                 clearToSave = false;
-                errorMessages.append("Price: value must be greater than 0\n");
+                errorMessages.append("Price: must be greater than 0\n");
             }
 
-
             System.out.println(errorMessages);
-
         } catch (Exception e) { // catch any unusual errors
             System.out.println("Exception: " + e);
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Something went wrong!");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Something went wrong");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
         }
+        return clearToSave;
+    }
+
+    public static boolean validateRadioButtonAction(
+            TextField machineIdOrCompany,
+            RadioButton inHouse,
+            RadioButton outsourced
+
+    ) {
+        boolean clearToSave = true;
+        String companyNameOrMachineId = null;
+        String regexInt = "^-?\\d+";
+        String regexWord = "^\\w+(.)*( \\w+)*(.)*";
+
+              /*
+             if InHouse radio button is selected and Machine ID is not
+             an integer raise an error.
+             */
+        if (inHouse.isSelected()
+                && !(machineIdOrCompany.getText().matches(regexInt))) {
+            clearToSave = false;
+            Main.errorMessages.append("Machine ID: enter a valid integer\n");
+
+                /*
+                If Outsourced radio button is selected and Company name is
+                empty raise an error.
+                 */
+        } else if (outsourced.isSelected()
+                && !(machineIdOrCompany.getText().matches(regexWord))) {
+
+            clearToSave = false;
+            Main.errorMessages.append("Company Name: enter a valid string\n");
+        } else {
+            companyNameOrMachineId = machineIdOrCompany.getText();
+        }
+
+        System.out.println(Main.errorMessages);
         return clearToSave;
     }
 }

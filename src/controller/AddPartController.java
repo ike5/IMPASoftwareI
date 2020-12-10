@@ -100,11 +100,11 @@ public class AddPartController implements Initializable {
                 pricePartTextField,
                 maxPartTextField,
                 minPartTextField
-        ) & (validateRadioButtonAction( // use bitwise operator for forced evaluation
+        ) & Main.validateRadioButtonAction( // use bitwise operator for forced evaluation
                 companyOrMachineIdPartTextField,
                 inHousePartRadioButton,
                 outsourcedPartRadioButton
-        ))) {
+        )) {
                 /*
             Check to see whether InHouse or Outsourced radio button is
             selected, then create the corresponding InHouse/Outsourced
@@ -142,42 +142,42 @@ public class AddPartController implements Initializable {
         errorLabel.setText(String.valueOf(Main.errorMessages));
     }
 
-    private static boolean validateRadioButtonAction(
-            TextField machineIdOrCompany,
-            RadioButton inHouse,
-            RadioButton outsourced
-
-    ) {
-        boolean clearToSave = true;
-        String companyNameOrMachineId = null;
-        String regexInt = "^-?\\d+";
-        String regexWord = "^\\w+( \\w+)*";
-
-              /*
-             if InHouse radio button is selected and Machine ID is not
-             an integer raise an error.
-             */
-        if (inHouse.isSelected()
-                && !(machineIdOrCompany.getText().matches(regexInt))) {
-            clearToSave = false;
-            Main.errorMessages.append("Machine ID: enter a valid integer\n");
-
-                /*
-                If Outsourced radio button is selected and Company name is
-                empty raise an error.
-                 */
-        } else if (outsourced.isSelected()
-                && !(machineIdOrCompany.getText().matches(regexWord))) {
-
-            clearToSave = false;
-            Main.errorMessages.append("Company Name: enter a valid string\n");
-        } else {
-            companyNameOrMachineId = machineIdOrCompany.getText();
-        }
-
-        System.out.println(Main.errorMessages);
-        return clearToSave;
-    }
+//    public static boolean validateRadioButtonAction(
+//            TextField machineIdOrCompany,
+//            RadioButton inHouse,
+//            RadioButton outsourced
+//
+//    ) {
+//        boolean clearToSave = true;
+//        String companyNameOrMachineId = null;
+//        String regexInt = "^-?\\d+";
+//        String regexWord = "^\\w+( \\w+)*";
+//
+//              /*
+//             if InHouse radio button is selected and Machine ID is not
+//             an integer raise an error.
+//             */
+//        if (inHouse.isSelected()
+//                && !(machineIdOrCompany.getText().matches(regexInt))) {
+//            clearToSave = false;
+//            Main.errorMessages.append("Machine ID: enter a valid integer\n");
+//
+//                /*
+//                If Outsourced radio button is selected and Company name is
+//                empty raise an error.
+//                 */
+//        } else if (outsourced.isSelected()
+//                && !(machineIdOrCompany.getText().matches(regexWord))) {
+//
+//            clearToSave = false;
+//            Main.errorMessages.append("Company Name: enter a valid string\n");
+//        } else {
+//            companyNameOrMachineId = machineIdOrCompany.getText();
+//        }
+//
+//        System.out.println(Main.errorMessages);
+//        return clearToSave;
+//    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

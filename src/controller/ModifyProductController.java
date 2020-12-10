@@ -78,8 +78,18 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void onActionModifyProductAdd(ActionEvent event) {
-        linkedParts.add(modifyProductTableView1.getSelectionModel().getSelectedItem());
-        modifyProductTableView2.setItems(linkedParts);
+        try{
+            // Trigger exception if none selected
+            Inventory.lookupPart(modifyProductTableView1.getSelectionModel().getSelectedItem().getId());
+
+            // Add selected item to linked parts list
+            linkedParts.add(modifyProductTableView1.getSelectionModel().getSelectedItem());
+            modifyProductTableView2.setItems(linkedParts); // Refresh TableView
+        } catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an item.");
+            alert.setTitle("Error Dialog");
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -103,8 +113,17 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void onActionModifyProductRemoveAssociation(ActionEvent event) {
-        linkedParts.remove(modifyProductTableView2.getSelectionModel().getSelectedItem());
-        modifyProductTableView2.setItems(linkedParts);
+        try{
+            // Trigger exception if no part selected
+            lookupPart(modifyProductTableView2.getSelectionModel().getSelectedItem().getId());
+            
+            linkedParts.remove(modifyProductTableView2.getSelectionModel().getSelectedItem());
+            modifyProductTableView2.setItems(linkedParts);
+        }catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
+            alert.setTitle("Error Dialog");
+            alert.showAndWait();
+        }
     }
 
 
@@ -156,6 +175,17 @@ public class ModifyProductController implements Initializable {
         for (Part p : product.getAllAssociatedParts()){
             linkedParts.add(p);
         }
+    }
+
+    private Part lookupPart(int partId) {
+        for (int i = 0; i < linkedParts.size(); i++) {
+            Part p = linkedParts.get(i);
+
+            if (p.getId() == linkedParts.get(i).getId()) {
+                return p;
+            }
+        }
+        return null;
     }
 
     @Override

@@ -97,7 +97,10 @@ public class ModifyPartController implements Initializable {
                 priceModifyPartTextField,
                 maxModifyPartTextField,
                 minModifyPartTextField
-        )) {
+        ) & Main.validateRadioButtonAction(
+                machineIdModifyPartTextField,
+                modifyPartInHouseRButton,
+                modifyPartOutsourcedRButton)) {
             if (modifyPartInHouseRButton.isSelected()) {
                 System.out.println("Calling InHouse Inventory updatePart");
                 Inventory.updatePart(
@@ -133,6 +136,7 @@ public class ModifyPartController implements Initializable {
             stage.setScene(new Scene(scene));
             stage.show();
         }
+        errorLabel.setText(String.valueOf(Main.errorMessages));
 
     }
 

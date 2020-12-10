@@ -222,7 +222,7 @@ public class MainController implements Initializable {
                 productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
             }
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a product.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
         }
@@ -252,12 +252,12 @@ public class MainController implements Initializable {
      */
     @FXML
     void onKeyTypedSearchPartIdOrName(KeyEvent event) {
-        ObservableList<Part> oList = Inventory.lookupPart(searchPartTextField.getText());
-        partTableView.setItems(oList);
+        ObservableList<Part> partFilteredList = Inventory.lookupPart(searchPartTextField.getText());
+        partTableView.setItems(partFilteredList);
 
         // Highlight if only a single row is filtered
-        if (oList.size() == 1) {
-            partTableView.getSelectionModel().select(oList.get(0));
+        if (partFilteredList.size() == 1) {
+            partTableView.getSelectionModel().select(partFilteredList.get(0));
         } else {
             partTableView.getSelectionModel().clearSelection();
         }
@@ -272,47 +272,47 @@ public class MainController implements Initializable {
      */
     @FXML
     void onKeyTypedSearchProductIdOrName(KeyEvent event) {
-        ObservableList<Product> oList = Inventory.lookupProduct(searchProductTextField.getText());
-        productTableView.setItems(oList);
+        ObservableList<Product> productFilteredList = Inventory.lookupProduct(searchProductTextField.getText());
+        productTableView.setItems(productFilteredList);
 
-        if (oList.size() == 1) {
-            productTableView.getSelectionModel().select(oList.get(0));
+        if (productFilteredList.size() == 1) {
+            productTableView.getSelectionModel().select(productFilteredList.get(0));
         } else {
             productTableView.getSelectionModel().clearSelection();
         }
     }
 
-    /**
-     * This method is used to see whether a Part object exists in Inventory.
-     * The method iterates through Inventory and stops when a match is found.
-     *
-     * @param id The id of a Part object.
-     * @return Returns true if a Part object is in Inventory, and false if not found.
-     */
-    public boolean searchPart(int id) {
-        // search method will set the id
-        for (Part part : Inventory.getAllParts()) {
-            if (part.getId() == id)
-                return true;
-        }
-        return false;
-    }
+//    /**
+//     * This method is used to see whether a Part object exists in Inventory.
+//     * The method iterates through Inventory and stops when a match is found.
+//     *
+//     * @param id The id of a Part object.
+//     * @return Returns true if a Part object is in Inventory, and false if not found.
+//     */
+//    public boolean searchPart(int id) {
+//        // search method will set the id
+//        for (Part part : Inventory.getAllParts()) {
+//            if (part.getId() == id)
+//                return true;
+//        }
+//        return false;
+//    }
 
-    /**
-     * This method searches Inventory by Product ID.
-     * The method lets user know if a Product exists.
-     *
-     * @param id The Product ID being searched for.
-     * @return Returns true if the Product ID matches one in Inventory,
-     * and returns false if no match is found.
-     */
-    public boolean searchProduct(int id) {
-        for (Product product : Inventory.getAllProducts()) {
-            if (product.getId() == id)
-                return true;
-        }
-        return false;
-    }
+//    /**
+//     * This method searches Inventory by Product ID.
+//     * The method lets user know if a Product exists.
+//     *
+//     * @param id The Product ID being searched for.
+//     * @return Returns true if the Product ID matches one in Inventory,
+//     * and returns false if no match is found.
+//     */
+//    public boolean searchProduct(int id) {
+//        for (Product product : Inventory.getAllProducts()) {
+//            if (product.getId() == id)
+//                return true;
+//        }
+//        return false;
+//    }
 
     /**
      * This method initializes upon staging of window.
