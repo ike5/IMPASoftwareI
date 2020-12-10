@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 public class ModifyPartController implements Initializable {
     Stage stage;
     Parent scene;
+    StringBuilder messages = new StringBuilder();
 
     @FXML
     private RadioButton modifyPartInHouseRButton;
@@ -95,11 +96,7 @@ public class ModifyPartController implements Initializable {
                 invModifyPartTextField,
                 priceModifyPartTextField,
                 maxModifyPartTextField,
-                minModifyPartTextField,
-                machineIdModifyPartTextField,
-                modifyPartInHouseRButton,
-                modifyPartOutsourcedRButton,
-                errorLabel
+                minModifyPartTextField
         )) {
             if (modifyPartInHouseRButton.isSelected()) {
                 System.out.println("Calling InHouse Inventory updatePart");

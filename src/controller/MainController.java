@@ -127,7 +127,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionDeletePart(ActionEvent event) {
-        try{
+        try {
             // Trigger exception of no part selected
             Inventory.lookupPart(partTableView.getSelectionModel().getSelectedItem().getId());
 
@@ -140,7 +140,7 @@ public class MainController implements Initializable {
                 Inventory.deletePart(partTableView.getSelectionModel().getSelectedItem()); // deletes Part object
                 partTableView.setItems(Inventory.lookupPart(searchPartTextField.getText())); // refresh filtered table
             }
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
@@ -208,7 +208,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
-        try{
+        try {
             // Trigger exception if no product selected
             Inventory.lookupProduct(productTableView.getSelectionModel().getSelectedItem().getId());
 
@@ -221,7 +221,7 @@ public class MainController implements Initializable {
                 Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
                 productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
             }
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
