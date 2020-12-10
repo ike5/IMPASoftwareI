@@ -63,7 +63,7 @@ public class Main extends Application {
         Inventory.addPart(outsourced2);
         Inventory.addPart(outsourced3);
 
-        Product product1 = new Product(++MainController.makeProductId, "Bobby's dorm", 200.99, 5, 1,8);
+        Product product1 = new Product(++MainController.makeProductId, "Bobby's dorm", 200.99, 5, 1, 8);
         Product product2 = new Product(++MainController.makeProductId, "Sandy's room", 300.11, 10, 1, 12);
         Product product3 = new Product(++MainController.makeProductId, "Billy's stuff", 20.95, 300, 1, 400);
 
@@ -109,8 +109,8 @@ public class Main extends Application {
         double vPrice = 0;
         String vName = null;
         String companyNameOrMachineId = null;
-        String regexInt = "^\\d+";
-        String regexDouble = "^\\d+(\\.\\d+)?";
+        String regexInt = "^-?\\d+";
+        String regexDouble = "^-?\\d+(\\.\\d+)?";
         String regexWord = "^\\w+( \\w+)*";
         StringBuilder errorMessages = new StringBuilder();
         boolean clearToSave = true;
@@ -158,6 +158,39 @@ public class Main extends Application {
                 vMin = Integer.parseInt(min.getText());
             }
 
+            // Max logic checking
+            if (vMax < 0) {
+                clearToSave = false;
+                errorMessages.append("Max: value must be greater than 0\n");
+            } else if (vMax < vMin) {
+                clearToSave = false;
+                errorMessages.append("Max: value must be greater than or equal to Min\n");
+            }
+
+            // Min logic checking
+            if (vMin < 0) {
+                clearToSave = false;
+                errorMessages.append("Min: value must be greater than 0\n");
+            } else if (vMin > vMax) {
+                clearToSave = false;
+                errorMessages.append("Min: value must be less than or equal to Max\n");
+            }
+
+            // Inventory logic checking
+            if (vInv > vMax || vInv < vMin) {
+                clearToSave = false;
+                errorMessages.append("Inv: value must be between Max and Min\n");
+            } else if (vInv < 0){
+                clearToSave = false;
+                errorMessages.append("Inv: value must be greater than or equal to 0\n");
+            }
+
+            // Price logic checking
+            if(vPrice < 0){
+                clearToSave = false;
+                errorMessages.append("Price: value must be greater than 0\n");
+            }
+
             /*
              if InHouse radio button is selected and Machine ID is not
              an integer raise an error.
@@ -173,7 +206,7 @@ public class Main extends Application {
                 empty raise an error.
                  */
             } else if (outsourced.isSelected()
-                    && machineIdOrCompany.getText().matches("")) {
+                    && !(machineIdOrCompany.getText().matches(regexWord))) {
 
                 clearToSave = false;
                 errorMessages.append("Company Name: enter a valid string\n");

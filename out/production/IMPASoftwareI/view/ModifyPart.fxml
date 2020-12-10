@@ -71,7 +71,7 @@
                 </GridPane>
                 <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                     <children>
-                  <Label fx:id="errorLabel" prefWidth="250.0" text="Label" textFill="RED" />
+                  <Label fx:id="errorLabel" prefWidth="250.0" textFill="RED" />
                         <Button mnemonicParsing="false" onAction="#onActionModifyPartSaveButton" text="Save" />
                         <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionModifyPartCancelButton" text="Cancel" />
                     </children>
