@@ -110,7 +110,7 @@ public class MainController implements Initializable {
         } catch (NullPointerException e) {
             System.out.println("Exception: " + e.getMessage());
 
-            Alert alert = new Alert(Alert.AlertType.ERROR, "You need to select an item!");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an item.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
         } catch (IOException e) {

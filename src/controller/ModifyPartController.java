@@ -34,7 +34,7 @@ public class ModifyPartController implements Initializable {
     private TextField idModifyPartTextField;
 
     @FXML
-    private TextField nameModifyPartTextfield;
+    private TextField nameModifyPartTextField;
 
     @FXML
     private TextField invModifyPartTextField;
@@ -53,6 +53,9 @@ public class ModifyPartController implements Initializable {
 
     @FXML
     private Label modifyPartMachineOrCompanyLabel;
+
+    @FXML
+    private Label errorLabel;
 
 //    @FXML
 //    private Button modifyPartSaveButton;
@@ -89,40 +92,53 @@ public class ModifyPartController implements Initializable {
         Part oldPart = Inventory.lookupPart(Integer.parseInt(idModifyPartTextField.getText()));
         int oldPartIndex = Inventory.getAllParts().indexOf(oldPart);
 
-        if (modifyPartInHouseRButton.isSelected()) {
-            System.out.println("Calling InHouse Inventory updatePart");
-            Inventory.updatePart(
-                    oldPartIndex,
-                    new InHouse(
-                            Integer.parseInt(idModifyPartTextField.getText()),
-                            nameModifyPartTextfield.getText(),
-                            Double.parseDouble(priceModifyPartTextField.getText()),
-                            Integer.parseInt(invModifyPartTextField.getText()),
-                            Integer.parseInt(minModifyPartTextField.getText()),
-                            Integer.parseInt(maxModifyPartTextField.getText()),
-                            Integer.parseInt(machineIdModifyPartTextField.getText())
-                    )
-            );
-        } else {
-            System.out.println("Calling Outsourced Inventory updatePart");
-            Inventory.updatePart(
-                    oldPartIndex,
-                    new Outsourced(
-                            Integer.parseInt(idModifyPartTextField.getText()),
-                            nameModifyPartTextfield.getText(),
-                            Double.parseDouble(priceModifyPartTextField.getText()),
-                            Integer.parseInt(invModifyPartTextField.getText()),
-                            Integer.parseInt(minModifyPartTextField.getText()),
-                            Integer.parseInt(maxModifyPartTextField.getText()),
-                            machineIdModifyPartTextField.getText()
-                    )
-            );
+        if (AddPartController.validate(
+                nameModifyPartTextField,
+                invModifyPartTextField,
+                priceModifyPartTextField,
+                maxModifyPartTextField,
+                minModifyPartTextField,
+                machineIdModifyPartTextField,
+                modifyPartInHouseRButton,
+                modifyPartOutsourcedRButton,
+                errorLabel
+        )) {
+            if (modifyPartInHouseRButton.isSelected()) {
+                System.out.println("Calling InHouse Inventory updatePart");
+                Inventory.updatePart(
+                        oldPartIndex,
+                        new InHouse(
+                                Integer.parseInt(idModifyPartTextField.getText()),
+                                nameModifyPartTextField.getText(),
+                                Double.parseDouble(priceModifyPartTextField.getText()),
+                                Integer.parseInt(invModifyPartTextField.getText()),
+                                Integer.parseInt(minModifyPartTextField.getText()),
+                                Integer.parseInt(maxModifyPartTextField.getText()),
+                                Integer.parseInt(machineIdModifyPartTextField.getText())
+                        )
+                );
+            } else {
+                System.out.println("Calling Outsourced Inventory updatePart");
+                Inventory.updatePart(
+                        oldPartIndex,
+                        new Outsourced(
+                                Integer.parseInt(idModifyPartTextField.getText()),
+                                nameModifyPartTextField.getText(),
+                                Double.parseDouble(priceModifyPartTextField.getText()),
+                                Integer.parseInt(invModifyPartTextField.getText()),
+                                Integer.parseInt(minModifyPartTextField.getText()),
+                                Integer.parseInt(maxModifyPartTextField.getText()),
+                                machineIdModifyPartTextField.getText()
+                        )
+                );
+            }
+
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
+            stage.setScene(new Scene(scene));
+            stage.show();
         }
 
-        stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
     }
 
     /**
@@ -134,7 +150,7 @@ public class ModifyPartController implements Initializable {
      */
     public void sendPart(Part part) {
         idModifyPartTextField.setText(String.valueOf(part.getId()));
-        nameModifyPartTextfield.setText(part.getName());
+        nameModifyPartTextField.setText(part.getName());
         invModifyPartTextField.setText(String.valueOf(part.getStock()));
         priceModifyPartTextField.setText(String.valueOf(part.getPrice()));
         maxModifyPartTextField.setText(String.valueOf(part.getMax()));

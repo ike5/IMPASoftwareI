@@ -61,7 +61,7 @@
                                 <Font name="System Italic" size="10.0" />
                             </font>
                         </TextField>
-                        <TextField fx:id="nameModifyPartTextfield" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="nameModifyPartTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="invModifyPartTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="priceModifyPartTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="maxModifyPartTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -71,6 +71,7 @@
                 </GridPane>
                 <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                     <children>
+                  <Label fx:id="errorLabel" prefWidth="250.0" text="Label" textFill="RED" />
                         <Button mnemonicParsing="false" onAction="#onActionModifyPartSaveButton" text="Save" />
                         <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onActionModifyPartCancelButton" text="Cancel" />
                     </children>

@@ -194,7 +194,7 @@ public class AddPartController implements Initializable {
         String companyNameOrMachineId = null;
         String regexInt = "^\\d+";
         String regexDouble = "^\\d+(\\.\\d+)?";
-        String regexWord = "^\\w+";
+        String regexWord = "^\\w+( \\w+)*";
         StringBuilder errorMessages = new StringBuilder();
         boolean clearToSave = true;
 
