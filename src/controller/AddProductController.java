@@ -81,6 +81,9 @@ public class AddProductController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @FXML
+    private Label addPartErrorLabel;
+
     /**
      * Why is the logic in this not the same as the MainController class? I did
      * everything exactly as I did in MainController but I'm getting an exception
@@ -99,7 +102,10 @@ public class AddProductController implements Initializable {
             // Highlight if only a single row is filtered
             if (partFilteredList.size() == 1) {
                 addProductTableView1.getSelectionModel().select(partFilteredList.get(0));
+            } else if (partFilteredList.size() == 0){
+                addPartErrorLabel.setText("No parts matching search field");
             } else {
+                addPartErrorLabel.setText("");
                 addProductTableView1.getSelectionModel().clearSelection();
             }
         } catch (Exception e) {

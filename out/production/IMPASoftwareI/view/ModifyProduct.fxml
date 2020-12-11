@@ -72,7 +72,7 @@
                     <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="modifyProductSearchTextField" alignment="CENTER" prefHeight="26.0" prefWidth="202.0" promptText="Search by Part ID or Name">
+                                <TextField fx:id="modifyProductSearchTextField" onKeyTyped="#onKeyTypedSearchPart" prefHeight="26.0" prefWidth="202.0" promptText="Search by Part ID or Name">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin></TextField>
@@ -86,12 +86,13 @@
                                 <TableColumn fx:id="modifyProductPriceColumn" prefWidth="125.0" text="Price/Cost per Unit" />
                             </columns>
                         </TableView>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="400.0" spacing="100.0">
                             <children>
+                        <Label fx:id="addPartErrorLabel" textFill="RED" />
                                 <Button mnemonicParsing="false" onAction="#onActionModifyProductAdd" text="Add" />
                             </children>
                             <padding>
-                                <Insets bottom="5.0" right="20.0" top="5.0" />
+                                <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
                             </padding>
                         </HBox>
                         <TableView fx:id="modifyProductTableView2" layoutX="12.0" layoutY="112.0" maxHeight="200.0" maxWidth="500.0" prefHeight="200.0" prefWidth="500.0">

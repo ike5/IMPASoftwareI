@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.Part;
@@ -75,6 +76,29 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     private TableColumn<Part, Double> modifyProductPriceCol;
+
+    @FXML
+    private Label addPartErrorLabel;
+
+    @FXML
+    void onKeyTypedSearchPart(KeyEvent event){
+        try {
+            ObservableList<Part> partFilteredList = Inventory.lookupPart(modifyProductSearchTextField.getText());
+            modifyProductTableView1.setItems(partFilteredList);
+
+            // Highlight if only a single row is filtered
+            if (partFilteredList.size() == 1) {
+                modifyProductTableView1.getSelectionModel().select(partFilteredList.get(0));
+            } else if (partFilteredList.size() == 0){
+                addPartErrorLabel.setText("No parts matching search field");
+            } else {
+                addPartErrorLabel.setText("");
+                modifyProductTableView1.getSelectionModel().clearSelection();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     @FXML
     void onActionModifyProductAdd(ActionEvent event) {
