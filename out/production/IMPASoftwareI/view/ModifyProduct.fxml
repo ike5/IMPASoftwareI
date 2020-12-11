@@ -63,6 +63,11 @@
                                 <TextField fx:id="minModifyProductTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                             </children>
                         </GridPane>
+                  <Label fx:id="errorLabel" prefWidth="250.0" textFill="RED">
+                     <VBox.margin>
+                        <Insets left="50.0" right="50.0" />
+                     </VBox.margin>
+                  </Label>
                     </children>
                     <padding>
                         <Insets top="20.0" />

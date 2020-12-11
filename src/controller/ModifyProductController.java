@@ -1,5 +1,6 @@
 package controller;
 
+import defaultpackage.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -81,7 +82,20 @@ public class ModifyProductController implements Initializable {
     private Label addPartErrorLabel;
 
     @FXML
-    void onKeyTypedSearchPart(KeyEvent event){
+    private Label errorLabel;
+
+    /**
+     * I couldn't figure out why the list wouldn't populate even
+     * though I had the logic correct until I realized that the
+     * event object provided by a key event is not an ActionEvent,
+     * but a KeyEvent object. Extending the functionality, I would
+     * disable the add button when there are no results from the
+     * search.
+     *
+     * @param event
+     */
+    @FXML
+    void onKeyTypedSearchPart(KeyEvent event) {
         try {
             ObservableList<Part> partFilteredList = Inventory.lookupPart(modifyProductSearchTextField.getText());
             modifyProductTableView1.setItems(partFilteredList);
@@ -89,7 +103,7 @@ public class ModifyProductController implements Initializable {
             // Highlight if only a single row is filtered
             if (partFilteredList.size() == 1) {
                 modifyProductTableView1.getSelectionModel().select(partFilteredList.get(0));
-            } else if (partFilteredList.size() == 0){
+            } else if (partFilteredList.size() == 0) {
                 addPartErrorLabel.setText("No parts matching search field");
             } else {
                 addPartErrorLabel.setText("");
@@ -102,14 +116,14 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void onActionModifyProductAdd(ActionEvent event) {
-        try{
+        try {
             // Trigger exception if none selected
             Inventory.lookupPart(modifyProductTableView1.getSelectionModel().getSelectedItem().getId());
 
             // Add selected item to linked parts list
             linkedParts.add(modifyProductTableView1.getSelectionModel().getSelectedItem());
             modifyProductTableView2.setItems(linkedParts); // Refresh TableView
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an item.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
@@ -127,7 +141,7 @@ public class ModifyProductController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to exit?\nAll changes will be lost!");
         Optional<ButtonType> result = alert.showAndWait();
 
-        if(result.isPresent() && result.get() == ButtonType.OK){
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             stage.setScene(new Scene(scene));
@@ -137,13 +151,13 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void onActionModifyProductRemoveAssociation(ActionEvent event) {
-        try{
+        try {
             // Trigger exception if no part selected
             lookupPart(modifyProductTableView2.getSelectionModel().getSelectedItem().getId());
-            
+
             linkedParts.remove(modifyProductTableView2.getSelectionModel().getSelectedItem());
             modifyProductTableView2.setItems(linkedParts);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
@@ -152,12 +166,20 @@ public class ModifyProductController implements Initializable {
 
 
     @FXML
-    void onActionModifyProductSave(ActionEvent event) {
+    void onActionModifyProductSave(ActionEvent event) throws IOException {
         Product oldProduct = Inventory.lookupProduct(Integer.parseInt(idModifyProductTextField.getText()));
         int oldProductIndex = Inventory.getAllProducts().indexOf(oldProduct);
         Product newProduct;
 
-        try{
+
+        // NEEDS VALIDATION
+        if (Main.validate(
+                nameModifyProductTextField,
+                invModifyProductTextField,
+                priceModifyProductTextField,
+                maxModifyProductTextField,
+                minModifyProductTextField
+        )) { // If validates, creates object and replaces old.
             Inventory.updateProduct(oldProductIndex, newProduct = new Product(
                             Integer.parseInt(idModifyProductTextField.getText()),
                             nameModifyProductTextField.getText(),
@@ -168,24 +190,17 @@ public class ModifyProductController implements Initializable {
                     )
             );
 
-            for(Part p : linkedParts){
+            // Any linked parts are added to newProduct's associatedParts ObservableList.
+            for (Part p : linkedParts) {
                 newProduct.addAssociatedPart(p);
             }
 
-
-            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             scene = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
-        } catch (NumberFormatException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Needs to be a number");
-            alert.setTitle("Error Dialog");
-            alert.showAndWait();
-        } catch (IOException e){
-            System.out.println("Exception: " + e.getMessage());
         }
-
-
+        errorLabel.setText(String.valueOf(Main.errorMessages));
 
     }
 
@@ -196,7 +211,7 @@ public class ModifyProductController implements Initializable {
         priceModifyProductTextField.setText(String.valueOf(product.getPrice()));
         maxModifyProductTextField.setText(String.valueOf(product.getMax()));
         minModifyProductTextField.setText(String.valueOf(product.getMin()));
-        for (Part p : product.getAllAssociatedParts()){
+        for (Part p : product.getAllAssociatedParts()) {
             linkedParts.add(p);
         }
     }
