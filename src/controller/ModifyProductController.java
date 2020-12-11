@@ -151,17 +151,23 @@ public class ModifyProductController implements Initializable {
 
     @FXML
     void onActionModifyProductRemoveAssociation(ActionEvent event) {
-        try {
-            // Trigger exception if no part selected
-            lookupPart(modifyProductTableView2.getSelectionModel().getSelectedItem().getId());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Remove part?");
+        Optional<ButtonType> result = alert.showAndWait();
 
-            linkedParts.remove(modifyProductTableView2.getSelectionModel().getSelectedItem());
-            modifyProductTableView2.setItems(linkedParts);
-        } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
-            alert.setTitle("Error Dialog");
-            alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            try {
+                // Trigger exception if no part selected
+                lookupPart(modifyProductTableView2.getSelectionModel().getSelectedItem().getId());
+
+                linkedParts.remove(modifyProductTableView2.getSelectionModel().getSelectedItem());
+                modifyProductTableView2.setItems(linkedParts);
+            } catch (NullPointerException e) {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR, "Please select a part.");
+                alert2.setTitle("Error Dialog");
+                alert2.showAndWait();
+            }
         }
+
     }
 
 
