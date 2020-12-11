@@ -212,17 +212,37 @@ public class MainController implements Initializable {
         try {
             // Trigger exception if no product selected
             Inventory.lookupProduct(productTableView.getSelectionModel().getSelectedItem().getId());
+            System.out.println("trigger exception called");
+
 
             // Confirm with user to delete part
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete product?");
             Optional<ButtonType> result = alert.showAndWait();
+            System.out.println("first alert called");
 
             // Checks wither OK button pressed then deletes product
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
-                productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
+            if (result.isPresent() && result.get() == ButtonType.OK){
+                System.out.println("Ok button pressed");
+
+                // Checks if product has an associatedPart
+                if (Inventory.lookupProduct(productTableView
+                        .getSelectionModel().getSelectedItem().getId())
+                        .getAllAssociatedParts().size() > 0) {
+                System.out.println("checked associated part and there IS a part associated");
+
+                    Alert alert1 = new Alert(Alert.AlertType.ERROR, "Has part associated with it!\nPlease remove part then delete.");
+                    alert1.setTitle("Error Dialog");
+                    alert1.showAndWait();
+                } else {
+                    System.out.println("No associated part, so deleted");
+                    Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
+                    productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
+                }
+
+
             }
         } catch (NullPointerException e) {
+            System.out.println("Null pointer exception thrown");
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a product.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
