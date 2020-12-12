@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,14 +11,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import model.InHouse;
 import model.Inventory;
 import model.Part;
 import model.Product;
-
 import java.io.IOException;
 import java.net.URL;
-import java.text.NumberFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -71,6 +67,13 @@ public class MainController implements Initializable {
     /**
      * The Add button opens the AddPart stage.
      * The button responds to click events to load and display the AddPart stage.
+     * <p>
+     * Logic issues: None. This method was easy to implement after watching
+     * the online lectures.
+     * <p>
+     * Compatible features: A future version of this method could include
+     * more visual feedback to the user that the button has been selected.
+     * I would also like to implement a click sound.
      *
      * @param event The event object generated after clicking the Add button.
      * @throws IOException
@@ -88,6 +91,13 @@ public class MainController implements Initializable {
     /**
      * The Modify button opens the ModifyPart stage.
      * The button responds to click events to load and display the ModifyPart stage.
+     * <p>
+     * Logic issue: None. I utilized a lot of the code from onActionModifyProduct()
+     * in order to implement this.
+     * <p>
+     * Compatible features: The button could remain unavailable until an item
+     * is selected. This would eliminate the NullPointerException every
+     * time.
      *
      * @param event The event object generated after clicking the Modify button.
      * @throws IOException
@@ -123,6 +133,16 @@ public class MainController implements Initializable {
      * The Delete button removes a selected Part object from Inventory.
      * Note that deleting from either the filtered or non-filtered list
      * refreshes the TableView with the correct Inventory Parts.
+     * <p>
+     * Logic issue: I experimented with how to trigger an exception whenever
+     * no item was selected in the TableView while clicked. I originally
+     * had lookup part in an 'if' statement, but decided against heavy
+     * nesting and to use the compiler's NullPointerException to trigger
+     * the error.
+     * <p>
+     * Compatible features: I could extend the function of the delete
+     * button by making the button unavailable until an item is
+     * selected in the TableView.
      *
      * @param event The event object generated after clicking the Delete button.
      */
@@ -151,6 +171,22 @@ public class MainController implements Initializable {
     /**
      * The Add button opens the AddProduct stage.
      * The button responds to click events to load and display the AddProduct stage.
+     * <p>
+     * Logic errors: There were no errors here. The casting from Button in order
+     * to get the event source was tricky, especially when trying to cast to
+     * a Stage object--it didn't make much sense to me early on in the
+     * programming process. My thoughts were: if I am getting the source of
+     * the button event object, it would only be the button. But since
+     * the button is part of the stage, it only make sense that you can
+     * use the .getScene() method and the .getWindow() method in order
+     * to cast the entire stage to a Stage object.
+     * <p>
+     * Compatible features: This is a very generic window switching tool. I have
+     * used it throughout this application already. Unlike how I have currently
+     * laid out my application, with two separate fxml files for both the
+     * AddPart and ModifyPart controllers, I could use this method with a
+     * bit of tweaking to transfer different objects to the same fxml file
+     * if needed.
      *
      * @param event The event object generated after clicking the Add button.
      * @throws IOException
@@ -168,6 +204,16 @@ public class MainController implements Initializable {
     /**
      * The Modify button opens the ModifyProduct stage.
      * The button responds to click events to load and display the ModifyProduct stage.
+     * <p>
+     * Logic issue: The ModifyProduct scene was not loading. I first tried to copy
+     * and paste code from the Animals activity that was part of the video
+     * lectures, to no avail. In order to fix the problem of no screen showing
+     * I found out that I needed to load from .getRoot(). This fixed the issue.
+     * <p>
+     * Compatible features: This method could be used to call the MainController
+     * from any other controller. If I wanted to create an addPart button
+     * directly from ModifyController, I could use this code to transfer
+     * the existing Part object to the add screen.
      *
      * @param event The event object generated after clicking the Modify button.
      * @throws IOException
@@ -204,7 +250,7 @@ public class MainController implements Initializable {
      * The Delete button removes a selected Product object from Inventory.
      * Note that deleting from either the filtered or non-filtered list
      * refreshes the TableView with the correct Inventory Products.
-     *
+     * <p>
      * Semantic issue: I had difficulty making sure that all associated parts
      * were taken into account and, if the product had an associated
      * part, would prevent the item from being deleted. After implementing
@@ -214,7 +260,7 @@ public class MainController implements Initializable {
      * in the console I could see that the second alert message was being
      * skipped because it had the same name as the first. I corrected the
      * issue by renaming the second alert message from alert to alert1.
-     *
+     * <p>
      * Compatible features: This method can be used to implement the remove
      * associated parts with a few changes.
      *
@@ -225,29 +271,25 @@ public class MainController implements Initializable {
         try {
             // Trigger exception if no product selected
             Inventory.lookupProduct(productTableView.getSelectionModel().getSelectedItem().getId());
-            System.out.println("trigger exception called");
-
 
             // Confirm with user to delete part
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete product?");
             Optional<ButtonType> result = alert.showAndWait();
-            System.out.println("first alert called");
 
             // Checks wither OK button pressed then deletes product
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                System.out.println("Ok button pressed");
 
                 // Checks if product has an associatedPart
                 if (Inventory.lookupProduct(productTableView
                         .getSelectionModel().getSelectedItem().getId())
                         .getAllAssociatedParts().size() > 0) {
-                    System.out.println("checked associated part and there IS a part associated");
 
+                    // Alert user that a part is still associated with the product
                     Alert alert1 = new Alert(Alert.AlertType.ERROR, "Has part associated with it!\nPlease remove part then delete.");
                     alert1.setTitle("Error Dialog");
                     alert1.showAndWait();
                 } else {
-                    System.out.println("No associated part, so deleted");
+                    // Delete the product
                     Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
                     productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
                 }
@@ -255,7 +297,10 @@ public class MainController implements Initializable {
 
             }
         } catch (NullPointerException e) {
+            // Log to console
             System.out.println("Null pointer exception thrown");
+
+            // Alert user to select a product
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a product.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
@@ -265,13 +310,13 @@ public class MainController implements Initializable {
     /**
      * The Exit button closes the application.
      * The Exit button calls the exit() method to close the application.
-     *
+     * <p>
      * Logic issue: I had originally created a way to exit the program
      * by calling the stage.close() method. This method was inefficient
      * and after learning to simply call System.exit(), I implemented
      * it since it could pass in a status code of 0 to be returned
      * to the console.
-     *
+     * <p>
      * Compatible features: In future updates of this program, I could
      * implement this method within the Modify part and product windows
      * in order to create a 'save and close' feature.
@@ -351,7 +396,12 @@ public class MainController implements Initializable {
      * The method sets up the TableView and provides a way to link the columns to their
      * respective controllers.
      * <p>
-     * Logic issue: This metho
+     * Logic issue: I don't think I really understand how the PropertyValueFactory
+     * string calls the items inside of an ObservableList.
+     * <p>
+     * Compatible features: If a lot of table items were to be used,
+     * I would implement a visual to let the user know that the TableView
+     * was being loaded.
      *
      * @param url            Unused parameter
      * @param resourceBundle Unused parameter
