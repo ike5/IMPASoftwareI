@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  */
 public class MainController implements Initializable {
     Stage stage;  // Stage required to display application.
-    Parent scene; // Can have as many scenes as you want.
+    Parent scene;
     public static int makePartId; // Provides a unique ID for parts among all packages.
     public static int makeProductId; // Provides a unique ID for products among all packages.
 
