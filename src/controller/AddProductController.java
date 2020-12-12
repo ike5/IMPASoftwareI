@@ -116,6 +116,7 @@ public class AddProductController implements Initializable {
                 addProductTableView1.getSelectionModel().clearSelection();
             }
         } catch (Exception e) {
+            // Log any unexpected errors
             System.out.println(e.getMessage());
         }
     }
