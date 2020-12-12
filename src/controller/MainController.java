@@ -205,6 +205,19 @@ public class MainController implements Initializable {
      * Note that deleting from either the filtered or non-filtered list
      * refreshes the TableView with the correct Inventory Products.
      *
+     * Semantic issue: I had difficulty making sure that all associated parts
+     * were taken into account and, if the product had an associated
+     * part, would prevent the item from being deleted. After implementing
+     * the if statement to check to see if the product had an associated
+     * part, the program was still not showing the correct alert message.
+     * Only after debugging the program and implementing print statements
+     * in the console I could see that the second alert message was being
+     * skipped because it had the same name as the first. I corrected the
+     * issue by renaming the second alert message from alert to alert1.
+     *
+     * Compatible features: This method can be used to implement the remove
+     * associated parts with a few changes.
+     *
      * @param event The event object generated after clicking the Delete button.
      */
     @FXML
@@ -221,14 +234,14 @@ public class MainController implements Initializable {
             System.out.println("first alert called");
 
             // Checks wither OK button pressed then deletes product
-            if (result.isPresent() && result.get() == ButtonType.OK){
+            if (result.isPresent() && result.get() == ButtonType.OK) {
                 System.out.println("Ok button pressed");
 
                 // Checks if product has an associatedPart
                 if (Inventory.lookupProduct(productTableView
                         .getSelectionModel().getSelectedItem().getId())
                         .getAllAssociatedParts().size() > 0) {
-                System.out.println("checked associated part and there IS a part associated");
+                    System.out.println("checked associated part and there IS a part associated");
 
                     Alert alert1 = new Alert(Alert.AlertType.ERROR, "Has part associated with it!\nPlease remove part then delete.");
                     alert1.setTitle("Error Dialog");
@@ -253,6 +266,16 @@ public class MainController implements Initializable {
      * The Exit button closes the application.
      * The Exit button calls the exit() method to close the application.
      *
+     * Logic issue: I had originally created a way to exit the program
+     * by calling the stage.close() method. This method was inefficient
+     * and after learning to simply call System.exit(), I implemented
+     * it since it could pass in a status code of 0 to be returned
+     * to the console.
+     *
+     * Compatible features: In future updates of this program, I could
+     * implement this method within the Modify part and product windows
+     * in order to create a 'save and close' feature.
+     *
      * @param event The event object generated after clicking the Exit button.
      */
     @FXML
@@ -268,6 +291,17 @@ public class MainController implements Initializable {
      * This method responds upon key entry in the Part search field.
      * The method updates the Part TableView with filtered Part objects
      * as a result of the search text.
+     * <p>
+     * Logic issue: I had trouble making the filter for both integers and
+     * for strings. After watching several of the online resources on
+     * creating a search TextField, I discovered that I could add all
+     * searches into an ObservableList within this method itself and
+     * utilize the lookup() Inventory method to return an observable
+     * list of filtered parts.
+     * <p>
+     * Compatible features: If a updated version of this method were created,
+     * I could create an UI message or alert that notifies the user when
+     * a search comes up unsuccessful.
      *
      * @param event The event object generated after text is entered in the search field.
      */
@@ -288,6 +322,15 @@ public class MainController implements Initializable {
      * This method responds upon key entry in the Product search field.
      * The method updates the Product TableView with filtered Product objects
      * as a result of the search text.
+     * <p>
+     * Logic issue: I had originally implemented a static ObservableList
+     * in order to search and place all matching items into a temporary
+     * list. Using a static field was unnecessary since I discovered that the
+     * list will filter on each KeyEvent.
+     * <p>
+     * Compatible features: This method could be updated to include a filter
+     * that searches only for those products that contain parts associated
+     * with it.
      *
      * @param event The event object generated after text is entered in the search field.
      */
@@ -307,18 +350,19 @@ public class MainController implements Initializable {
      * This method initializes upon staging of window.
      * The method sets up the TableView and provides a way to link the columns to their
      * respective controllers.
+     * <p>
+     * Logic issue: This metho
      *
      * @param url            Unused parameter
      * @param resourceBundle Unused parameter
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        // set up table view, let table know which objects will be working with.
+        // Set up table view, let table know which objects will be working with.
         partTableView.setItems(Inventory.getAllParts());
         productTableView.setItems(Inventory.getAllProducts());
 
-        // get id, and populate cell of ID column
+        // Get id, and populate cell of ID column
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -328,12 +372,6 @@ public class MainController implements Initializable {
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPricePerUnitColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-
-//        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-//        partPricePerUnitColumn.setCellFactory(partDoubleTableColumn -> {
-//
-//        });
     }
 }
 
