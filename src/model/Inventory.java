@@ -76,8 +76,8 @@ public class Inventory {
      * This method is used to search a Part object by name and return matching items.
      *
      * @param partName A String representing the name of a Part or ID.
-     * @return Returns all filtered Parts in an ObservableList<Part> if the
-     * filtered parts list is not empty. Returns original ObservableList<Part>
+     * @return Returns all filtered Parts in an ObservableList if the
+     * filtered parts list is not empty. Returns original ObservableList
      * if there are no filtered Parts.
      */
     public static ObservableList<Part> lookupPart(String partName) {
@@ -107,8 +107,8 @@ public class Inventory {
      * This method is used to search a Product object by name and return matching items.
      *
      * @param productName A String representing the name of a Product or ID.
-     * @return Returns all filtered Products in an ObservableList<Product> if the
-     * filtered products list is not empty. Returns original ObservableList<Product>
+     * @return Returns all filtered Products in an ObservableList if the
+     * filtered products list is not empty. Returns original ObservableList
      * if there are no filtered Products.
      */
     public static ObservableList<Product> lookupProduct(String productName) {

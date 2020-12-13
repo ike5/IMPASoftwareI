@@ -15,7 +15,8 @@ import model.Outsourced;
 import model.Product;
 
 /**
- * This is the main class that launches the app.
+ * This is the main class that launches the app. Static public methods
+ * are included here.
  */
 public class Main extends Application {
     public static StringBuilder errorMessages = new StringBuilder();

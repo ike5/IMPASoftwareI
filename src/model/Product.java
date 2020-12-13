@@ -108,7 +108,6 @@ public class Product {
         this.max = max;
     }
 
-
     /**
      * Addis a Part object to an ObservableList.
      *
