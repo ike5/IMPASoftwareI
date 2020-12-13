@@ -4,6 +4,9 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * This class provides Inventory methods.
+ */
 public class Inventory {
     // Provides the list of Part objects
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();

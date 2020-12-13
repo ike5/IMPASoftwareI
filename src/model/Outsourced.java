@@ -1,6 +1,8 @@
 package model;
-// Completed (Still needs Javadocs however)
 
+/**
+ * This class supplies the Outsourced objects.
+ */
 public class Outsourced extends Part{
     private String companyName;
 
@@ -9,13 +11,17 @@ public class Outsourced extends Part{
         this.companyName = companyName;
     }
 
+    /**
+     * @return the company name
+     */
     public String getCompanyName() {
         return companyName;
     }
 
+    /**
+     * @param companyName the company name to set
+     */
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
-
-
 }

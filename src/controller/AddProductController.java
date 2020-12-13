@@ -22,10 +22,13 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This class creates the AddProductController.
+ */
 public class AddProductController implements Initializable {
     private Stage stage; // Stage required to display application
     private Parent scene;
-    // List to temporarily hold associated parts until commited to
+    // List to temporarily hold associated parts until committed to
     // the associatedProduct() method in the Product object.
     private ObservableList<Part> linkedParts = FXCollections.observableArrayList();
 

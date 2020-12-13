@@ -1,6 +1,8 @@
 package model;
-// Completed (still needs Javadocs however)
 
+/**
+ * This class supplies the InHouse object.
+ */
 public class InHouse extends Part {
     private int machineId;
 
@@ -9,10 +11,16 @@ public class InHouse extends Part {
         this.machineId = machineId;
     }
 
+    /**
+     * @return the machine ID
+     */
     public int getMachineId() {
         return machineId;
     }
 
+    /**
+     * @param machineId the machine ID to set
+     */
     public void setMachineId(int machineId) {
         this.machineId = machineId;
     }

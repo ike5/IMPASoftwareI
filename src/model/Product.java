@@ -1,9 +1,11 @@
 package model;
-// Completed (Still needs javadocs however)
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * This class provides the Product methods.
+ */
 public class Product {
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     private int id;
@@ -22,82 +24,118 @@ public class Product {
         this.max = max;
     }
 
+    /**
+     * @return the id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name the name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return the price
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * @param price the price to set
+     */
     public void setPrice(double price) {
         this.price = price;
     }
 
+    /**
+     * @return the stock or inventory
+     */
     public int getStock() {
         return stock;
     }
 
+    /**
+     * @param stock the stock or inventory to get
+     */
     public void setStock(int stock) {
         this.stock = stock;
     }
 
+    /**
+     * @return the min
+     */
     public int getMin() {
         return min;
     }
 
+    /**
+     * @param min the min to set
+     */
     public void setMin(int min) {
         this.min = min;
     }
 
+    /**
+     * @return the max
+     */
     public int getMax() {
         return max;
     }
 
+    /**
+     * @param max the max to set
+     */
     public void setMax(int max) {
         this.max = max;
     }
 
 
     /**
-     * Add a Part object to an ObservableList.
+     * Addis a Part object to an ObservableList.
      *
-     * @param part
+     * @param part the part to set
      */
-    public void addAssociatedPart(Part part){
+    public void addAssociatedPart(Part part) {
         associatedParts.add(part);
     }
 
 
     /**
-     * Remove Part object from ObservableList and return whether successful or not.
+     * Removes a Part object from ObservableList.
      *
-     * @param selectedAssociatedPart
-     * @return
+     * @param selectedAssociatedPart the associated part to delete
+     * @return Returns true if deleted successfully
      */
-    public boolean deleteAssociatedPart(Part selectedAssociatedPart){
+    public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
         return associatedParts.remove(selectedAssociatedPart);
     }
 
 
     /**
-     * Returns ObservableList of all associated parts.
+     * Returns an ObservableList of all associated parts.
      *
-     * @return
+     * @return Returns an ObservableList of associated parts
      */
-    public ObservableList<Part> getAllAssociatedParts(){
+    public ObservableList<Part> getAllAssociatedParts() {
         return associatedParts;
     }
 }
