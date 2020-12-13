@@ -22,7 +22,6 @@ import java.util.Optional;
 public class ModifyPartController {
     Stage stage; // Required in order to build window
     Parent scene;
-    StringBuilder messages = new StringBuilder();
 
     @FXML
     private RadioButton modifyPartInHouseRButton;
