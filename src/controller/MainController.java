@@ -162,6 +162,7 @@ public class MainController implements Initializable {
                 partTableView.setItems(Inventory.lookupPart(searchPartTextField.getText())); // refresh filtered table
             }
         } catch (NullPointerException e) {
+            System.out.println("Null pointer exception thrown");
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();

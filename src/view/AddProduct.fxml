@@ -112,8 +112,8 @@
                      <children>
                         <VBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="169.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#onActionAddProductRemoveAssociation" prefHeight="25.0" prefWidth="129.0" text="Remove Associated Part" />
-                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="37.0">
+                              <Button mnemonicParsing="false" onAction="#onActionAddProductRemoveAssociation" prefHeight="25.0" prefWidth="165.0" text="Remove Associated Part" />
+                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#onActionAddProductSaveButton" text="Save" />
                                     <Button mnemonicParsing="false" onAction="#onActionAddProductCancelButton" text="Cancel" />
