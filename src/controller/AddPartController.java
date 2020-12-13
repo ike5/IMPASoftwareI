@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
 import model.Outsourced;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -73,8 +74,7 @@ public class AddPartController implements Initializable {
      */
     @FXML
     void onActionCancelPart(ActionEvent event) throws IOException {
-        Alert alert = new Alert(
-                Alert.AlertType.CONFIRMATION,
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                 "Are you sure you want to exit and\ndiscard changes?");
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -211,8 +211,7 @@ public class AddPartController implements Initializable {
      * The method initially set the default label for the Machine ID and Company
      * Name to Machine ID.
      *
-     *
-     * @param url       Unused
+     * @param url            Unused
      * @param resourceBundle Unused
      */
     @Override

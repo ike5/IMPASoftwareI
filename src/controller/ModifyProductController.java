@@ -105,25 +105,20 @@ public class ModifyProductController implements Initializable {
      */
     @FXML
     void onKeyTypedSearchPart(KeyEvent event) {
-        try {
-            // Create a temporary filtered list of object matching search
-            ObservableList<Part> partFilteredList = Inventory.lookupPart(modifyProductSearchTextField.getText());
-            modifyProductTableView1.setItems(partFilteredList);
+        // Create a temporary filtered list of object matching search
+        ObservableList<Part> partFilteredList = Inventory.lookupPart(modifyProductSearchTextField.getText());
+        modifyProductTableView1.setItems(partFilteredList);
 
-            // Highlight if only a single row is filtered
-            if (partFilteredList.size() == 1) {
-                modifyProductTableView1.getSelectionModel().select(partFilteredList.get(0));
-            } else if (partFilteredList.size() == 0) {
-                // Provide error message in UI if no results from search
-                addPartErrorLabel.setText("No parts matching search field");
-            } else {
-                // Clear error message label if search field is simply blank
-                addPartErrorLabel.setText("");
-                modifyProductTableView1.getSelectionModel().clearSelection();
-            }
-        } catch (Exception e) {
-            // Log any unusual errors.
-            System.out.println(e.getMessage());
+        // Highlight if only a single row is filtered
+        if (partFilteredList.size() == 1) {
+            modifyProductTableView1.getSelectionModel().select(partFilteredList.get(0));
+        } else if (partFilteredList.size() == 0) {
+            // Provide error message in UI if no results from search
+            addPartErrorLabel.setText("No parts matching search field");
+        } else {
+            // Clear error message label if search field is simply blank
+            addPartErrorLabel.setText("");
+            modifyProductTableView1.getSelectionModel().clearSelection();
         }
     }
 
@@ -307,12 +302,14 @@ public class ModifyProductController implements Initializable {
      * @param product The Product object received from Main Controller's TableView
      */
     public void sendProduct(Product product) {
+        // Populate all TextFields
         idModifyProductTextField.setText(String.valueOf(product.getId()));
         nameModifyProductTextField.setText(product.getName());
         invModifyProductTextField.setText(String.valueOf(product.getStock()));
         priceModifyProductTextField.setText(String.format("%,.2f", product.getPrice()));
         maxModifyProductTextField.setText(String.valueOf(product.getMax()));
         minModifyProductTextField.setText(String.valueOf(product.getMin()));
+        // Add associated parts to linkedParts list
         for (Part p : product.getAllAssociatedParts()) {
             linkedParts.add(p);
         }

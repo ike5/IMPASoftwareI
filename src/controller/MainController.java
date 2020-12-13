@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import model.Inventory;
 import model.Part;
 import model.Product;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -64,6 +65,12 @@ public class MainController implements Initializable {
     @FXML
     private TableColumn<Product, Double> productPricePerUnitColumn; // Product Price column
 
+    @FXML
+    private Label partErrorLabel;
+
+    @FXML
+    private Label productErrorLabel;
+
     /**
      * The Add button opens the AddPart stage.
      * The button responds to click events to load and display the AddPart stage.
@@ -103,7 +110,7 @@ public class MainController implements Initializable {
      * @throws IOException
      */
     @FXML
-    void onActionModifyPart(ActionEvent event) {
+    void onActionModifyPart(ActionEvent event) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/ModifyPart.fxml"));
@@ -119,13 +126,9 @@ public class MainController implements Initializable {
             stage.setScene(new Scene(scene));
             stage.show();
         } catch (NullPointerException e) {
-            System.out.println("Exception: " + e.getMessage());
-
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an item.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
-        } catch (IOException e) {
-            System.out.println("Exception: " + e);
         }
     }
 
@@ -162,7 +165,6 @@ public class MainController implements Initializable {
                 partTableView.setItems(Inventory.lookupPart(searchPartTextField.getText())); // refresh filtered table
             }
         } catch (NullPointerException e) {
-            System.out.println("Null pointer exception thrown");
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a part.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
@@ -220,7 +222,7 @@ public class MainController implements Initializable {
      * @throws IOException
      */
     @FXML
-    void onActionModifyProduct(ActionEvent event) {
+    void onActionModifyProduct(ActionEvent event) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/ModifyProduct.fxml"));
@@ -236,13 +238,9 @@ public class MainController implements Initializable {
             stage.setScene(new Scene(scene));
             stage.show();
         } catch (NullPointerException e) {
-            System.out.println("Exception: " + e.getMessage());
-
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an item.");
             alert.setTitle("Error Dialog");
             alert.showAndWait();
-        } catch (IOException e) {
-            System.out.println("Exception " + e);
         }
 
     }
@@ -286,21 +284,18 @@ public class MainController implements Initializable {
                         .getAllAssociatedParts().size() > 0) {
 
                     // Alert user that a part is still associated with the product
-                    Alert alert1 = new Alert(Alert.AlertType.ERROR, "Has part associated with it!\nPlease remove part then delete.");
+                    Alert alert1 = new Alert(Alert.AlertType.ERROR,
+                            "Has part associated with it!\nPlease remove part then delete.");
                     alert1.setTitle("Error Dialog");
                     alert1.showAndWait();
                 } else {
                     // Delete the product
-                    Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem()); // deletes Product object
-                    productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText())); // refresh filtered table
+                    Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem());
+                    // refresh filtered table
+                    productTableView.setItems(Inventory.lookupProduct(searchProductTextField.getText()));
                 }
-
-
             }
         } catch (NullPointerException e) {
-            // Log to console
-            System.out.println("Null pointer exception thrown");
-
             // Alert user to select a product
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a product.");
             alert.setTitle("Error Dialog");
@@ -359,7 +354,12 @@ public class MainController implements Initializable {
         // Highlight if only a single row is filtered
         if (partFilteredList.size() == 1) {
             partTableView.getSelectionModel().select(partFilteredList.get(0));
+        } else if (partFilteredList.size() == 0) {
+            // Provide error message in UI if no results from search
+            partErrorLabel.setText("No parts matching search field");
         } else {
+            // Clear error message label if search field is simply blank
+            partErrorLabel.setText("");
             partTableView.getSelectionModel().clearSelection();
         }
     }
@@ -387,7 +387,12 @@ public class MainController implements Initializable {
 
         if (productFilteredList.size() == 1) {
             productTableView.getSelectionModel().select(productFilteredList.get(0));
+        } else if (productFilteredList.size() == 0) {
+            // Provide error message in UI if no results from search
+            productErrorLabel.setText("No parts matching search field");
         } else {
+            // Clear error message label if search field is simply blank
+            productErrorLabel.setText("");
             productTableView.getSelectionModel().clearSelection();
         }
     }

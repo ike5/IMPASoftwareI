@@ -99,25 +99,20 @@ public class AddProductController implements Initializable {
      */
     @FXML
     void onKeyTypedSearchPart(KeyEvent event) {
-        try {
-            // Call lookupPart and return a filtered list.
-            ObservableList<Part> partFilteredList = Inventory.lookupPart(
-                    searchAddProductTextField.getText());
-            // Set table with filtered list of searched items.
-            addProductTableView1.setItems(partFilteredList);
+        // Call lookupPart and return a filtered list.
+        ObservableList<Part> partFilteredList = Inventory.lookupPart(
+                searchAddProductTextField.getText());
+        // Set table with filtered list of searched items.
+        addProductTableView1.setItems(partFilteredList);
 
-            // Highlight if only a single row is filtered
-            if (partFilteredList.size() == 1) {
-                addProductTableView1.getSelectionModel().select(partFilteredList.get(0));
-            } else if (partFilteredList.size() == 0) {
-                addPartErrorLabel.setText("No parts matching search field");
-            } else {
-                addPartErrorLabel.setText("");
-                addProductTableView1.getSelectionModel().clearSelection();
-            }
-        } catch (Exception e) {
-            // Log any unexpected errors
-            System.out.println(e.getMessage());
+        // Highlight if only a single row is filtered
+        if (partFilteredList.size() == 1) {
+            addProductTableView1.getSelectionModel().select(partFilteredList.get(0));
+        } else if (partFilteredList.size() == 0) {
+            addPartErrorLabel.setText("No parts matching search field");
+        } else {
+            addPartErrorLabel.setText("");
+            addProductTableView1.getSelectionModel().clearSelection();
         }
     }
 
