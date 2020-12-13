@@ -23,11 +23,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddProductController implements Initializable {
-    Stage stage; // Stage required to display application
-    Parent scene;
+    private Stage stage; // Stage required to display application
+    private Parent scene;
     // List to temporarily hold associated parts until commited to
     // the associatedProduct() method in the Product object.
-    ObservableList<Part> linkedParts = FXCollections.observableArrayList();
+    private ObservableList<Part> linkedParts = FXCollections.observableArrayList();
 
     @FXML
     private TextField nameAddProductTextField;

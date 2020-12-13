@@ -22,8 +22,8 @@ import java.lang.*;
  * This class creates the Add Part controller.
  */
 public class AddPartController implements Initializable {
-    Stage stage; // Required for displaying application
-    Parent scene;
+    private Stage stage; // Required for displaying application
+    private Parent scene;
 
     @FXML
     private RadioButton inHousePartRadioButton;

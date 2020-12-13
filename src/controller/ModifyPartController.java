@@ -20,8 +20,8 @@ import java.util.Optional;
  * This class creates the ModifyPartController window.
  */
 public class ModifyPartController {
-    Stage stage; // Required in order to build window
-    Parent scene;
+    private Stage stage; // Required in order to build window
+    private Parent scene;
 
     @FXML
     private RadioButton modifyPartInHouseRButton;

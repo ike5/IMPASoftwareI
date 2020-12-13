@@ -26,10 +26,10 @@ import java.util.ResourceBundle;
  * This class creates the ModifyProductController window.
  */
 public class ModifyProductController implements Initializable {
-    Stage stage; // Required in order to build the window
-    Parent scene;
+    private Stage stage; // Required in order to build the window
+    private Parent scene;
     // Temporary holding list for associated Parts
-    ObservableList<Part> linkedParts = FXCollections.observableArrayList();
+    private ObservableList<Part> linkedParts = FXCollections.observableArrayList();
 
     @FXML
     private TextField idModifyProductTextField;

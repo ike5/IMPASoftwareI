@@ -72,7 +72,7 @@ Your submission must be your original work. No more than a combined total of 30%
 
 ### II.  Application
 
-##### B.  Create classes with data and logic that map to the UML class diagram and include the supplied Part class provided in the attached “Part.java.” Do not alter the provided class. Include all the classes and members as shown in the UML diagram. Your code should demonstrate the following:
+### B.  Create classes with data and logic that map to the UML class diagram and include the supplied Part class provided in the attached “Part.java.” Do not alter the provided class. Include all the classes and members as shown in the UML diagram. Your code should demonstrate the following:
 
 - [ ]  inheritance 
 
@@ -83,9 +83,9 @@ Your submission must be your original work. No more than a combined total of 30%
 - [ ]  instance and static methods
 
 
-##### C.  Add the following functionalities to the Main form:
+### C.  Add the following functionalities to the Main form:
 
-### 1.  The Parts pane
+##### 1.  The Parts pane
 
 - [ ]  The Add button under the Parts TableView opens the Add Part form.
 
@@ -97,30 +97,30 @@ Your submission must be your original work. No more than a combined total of 30%
 
 - [ ]  If the search field is set to empty, the table should be repopulated with all available parts.
 
-### 2.  The Products pane
+##### 2.  The Products pane
 
-•  The Add button under the Products TableView opens the Add Product form.
+- [ ] The Add button under the Products TableView opens the Add Product form.
 
-•  The Modify button under the Products TableView opens the Modify Product form.
+- [ ]  The Modify button under the Products TableView opens the Modify Product form.
 
-•  The Delete button under the Products TableView deletes the selected product (if appropriate) from the Products TableView or displays a descriptive error message in the UI or in a dialog box if a product is not deleted.
+- [ ]  The Delete button under the Products TableView deletes the selected product (if appropriate) from the Products TableView or displays a descriptive error message in the UI or in a dialog box if a product is not deleted.
 
-•  When the user searches for products by ID or name (partial or full name) using the text field, the application displays matching results in the Products TableView. (Including a search button is optional.) If a product or products are found, the application highlights a single product or products or filters multiple products. If a product or products are not found, the application displays an error message in the UI or in a dialog box.
+- [ ]  When the user searches for products by ID or name (partial or full name) using the text field, the application displays matching results in the Products TableView. (Including a search button is optional.) If a product or products are found, the application highlights a single product or products or filters multiple products. If a product or products are not found, the application displays an error message in the UI or in a dialog box.
 
-•  If the search field is set to empty, the table should be repopulated with all available products.
-
-
-Note: A product’s associated parts can exist independent of current inventory of parts. You are not required to display defaultpackage data upon launching your application. You do not need to save your data to a database or a file; data for this application is nonpersistent and will reside in computer memory while in use.
+- [ ]  If the search field is set to empty, the table should be repopulated with all available products.
 
 
-3.  Exit button
+>Note: A product’s associated parts can exist independent of current inventory of parts. You are not required to display defaultpackage data upon launching your application. You do not need to save your data to a database or a file; data for this application is nonpersistent and will reside in computer memory while in use.
+
+
+##### 3.  Exit button
 
 •  The Exit button closes the application.
 
 
-D.  Add the listed functionalities to the following parts forms:
+### D.  Add the listed functionalities to the following parts forms:
 
-1.  The Add Part form
+##### 1.  The Add Part form
 
 •  The In-House and Outsourced radio buttons switch the bottom label to the correct value (Machine ID or Company Name).
 
@@ -134,7 +134,7 @@ D.  Add the listed functionalities to the following parts forms:
 
 •  Canceling or exiting this form redirects users to the Main form.
 
-2.  The Modify Part form
+##### 2.  The Modify Part form
 
 •  The text fields populate with the data from the chosen part.
 
@@ -147,9 +147,9 @@ D.  Add the listed functionalities to the following parts forms:
 •  Canceling or exiting this form redirects users to the Main form.
 
 
-E.  Add the following functionalities to the following product forms:
+### E.  Add the following functionalities to the following product forms:
 
-1.  The Add Product form
+##### 1.  The Add Product form
 
 •  The application auto-generates a unique product ID. The product IDs can be, but do not need to be, contiguous. - The product ID text field must be disabled and cannot be edited or changed.
 
@@ -170,10 +170,10 @@ E.  Add the following functionalities to the following product forms:
 •  Canceling or exiting this form redirects users to the Main form.
 
 
-Note: When a product is deleted, so can its associated parts without affecting the part inventory. The Remove Associated Part button removes a selected part from the bottom table. (This dissociates or removes a part from a product.)
+>Note: When a product is deleted, so can its associated parts without affecting the part inventory. The Remove Associated Part button removes a selected part from the bottom table. (This dissociates or removes a part from a product.)
 
 
-2.  The Modify Product form
+##### 2.  The Modify Product form
 
 •  The text fields populate with the data from the chosen product, and the bottom TableView populates with the associated parts.
 
@@ -198,10 +198,10 @@ Note: When a product is deleted, so can its associated parts without affecting t
 •  Canceling or exiting this form redirects users to the Main form.
 
 
-Note: The Remove Associated Part button removes a selected part from the bottom table. (This dissociates or removes a part from a product.)
+>Note: The Remove Associated Part button removes a selected part from the bottom table. (This dissociates or removes a part from a product.)
 
 
-F.  Write code to implement input validation and logical error checks using a dialog box or message in the UI displaying a descriptive error message for each of the following circumstances:
+### F.  Write code to implement input validation and logical error checks using a dialog box or message in the UI displaying a descriptive error message for each of the following circumstances:
 
 •  Min should be less than Max; and Inv should be between those two values.
 
@@ -212,16 +212,16 @@ F.  Write code to implement input validation and logical error checks using a di
 •  The application will not crash when inappropriate user data is entered in the forms; instead, error messages should be generated.
 
 
-G.  Provide descriptive Javadoc comments for each member throughout the code. Create an index.html file of your comments to include with your submission, excluding the provided part class that cannot be modified, based on Oracle’s guidelines for the Javadoc tool. Include a description of the following in your comments:
+### G.  Provide descriptive Javadoc comments for each member throughout the code. Create an index.html file of your comments to include with your submission, excluding the provided part class that cannot be modified, based on Oracle’s guidelines for the Javadoc tool. Include a description of the following in your comments:
 
 •  a detailed description of a logical or runtime error that you corrected in the code and a detailed description of how you corrected it above the line of code you are referring to
 
 •  a compatible feature suitable to your application that would extend functionality to the next version if you were to update the application
 
 
-H.  Demonstrate professional communication in the content and presentation of your submission.
+### H.  Demonstrate professional communication in the content and presentation of your submission.
 
-File Restrictions
-File name may contain only letters, numbers, spaces, and these symbols: ! - _ . * ' ( )
-File size limit: 200 MB
-File types allowed: doc, docx, rtf, xls, xlsx, ppt, pptx, odt, pdf, txt, qt, mov, mpg, avi, mp3, wav, mp4, wma, flv, asf, mpeg, wmv, m4v, svg, tif, tiff, jpeg, jpg, gif, png, zip, rar, tar, 7z
+### File Restrictions
+>- File name may contain only letters, numbers, spaces, and these symbols: ! - _ . * ' ( )
+>- File size limit: 200 MB
+>- File types allowed: doc, docx, rtf, xls, xlsx, ppt, pptx, odt, pdf, txt, qt, mov, mpg, avi, mp3, wav, mp4, wma, flv, asf, mpeg, wmv, m4v, svg, tif, tiff, jpeg, jpg, gif, png, zip, rar, tar, 7z
